@@ -18,7 +18,8 @@ to push to a branch instead, first make a branch with:
 git checkout -b [branch-name]
 then, add to the branch:
 git add .
-Now, we can push that branch to githubgit push origin new-branch
+Now, we can push that branch to github:
+git push origin [branch-name]
 then, through github, do a pull request to merge the branch. New changes should be done in a branch,
 and later merged so that we don't accidentally overwrite progress.
 If you need to update your code to match what is in github, we must pull them. do:

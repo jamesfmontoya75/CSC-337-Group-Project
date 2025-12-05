@@ -1,18 +1,75 @@
 <!DOCTYPE html>
 <html>
     <style>
-        body{
-            background-color: lightblue;
+        html{
+            height: 100%;
         }
-        #header{
-            font-size: 75px;
+        body{
+            height: 102%;
+            background-color: lightblue;
+            padding: 0px;
+            margin: 0px;
+            position: relative;
+            top: -30px;
+            
+        }
+        #headsection{
+            height: 10%;
+            font-size: 20px;
             background-color: red;
             text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        #header{
+            text-align: center;
+            position:relative;
+            top: 25%;
+        }
+        #logoutButton{
+            text-align: right;
+            position:absolute;
+            right: 0%;
+        }
+        #content{
+            text-align: center;
+            height: 90%;
+            background-color: lightcoral;
+            width: 85%;
+            float: left;
+        }
+        #navbar{
+            text-align: center;
+            width: 15%;
+            height: 90%;
+            background-color: green;
+            float: left;
+        }
+        .link{
+            font-size: 50px;
+            display: block;
+        }
+        #navhead{
+            font-size: 40px;
         }
     </style>
     <body>
         <title>Home</title>
-        <h1 id= "header">Mockbuster</h1>
+        <div id="headsection">
+            <form action="logout">
+                <input id="logoutButton" type="submit" value="Logout">
+            </form>
+            <h1 id= "header">Mockbuster</h1>
+        </div>
+        
+        <div id="navbar">
+            <header id="navhead">Navigation</header>
+            <a class = "link" href="about.html">About</a>
+            <a class = "link" href="#">Portfolio</a>
+            <a class = "link" href="#">Contact</a>
+        </div>
+        <div id="content">
+        </div>
         
     </body>
 </html>

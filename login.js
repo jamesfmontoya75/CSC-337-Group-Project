@@ -9,13 +9,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 
-//to start server, do this in terminal: 
-// npm init -y
-// npm i express
-// npm i --save-dev nodemon
-// then in the json file, put "devStart" inside of scripts and after the colon put 
-// "nodemon [servername].js" 
-// then, the server can be continuosly ran with "npm run devStart"
+
 
 app.get("/login", (req, res)=>{
     var htmlcontent = ''
@@ -41,6 +35,9 @@ app.post("/action", (req, res)=>{
 <html>
     
     <style>
+        body{
+            margin: 0px;
+        }
         h1{
             font-size: 75px;
             background-color: lightcoral;
