@@ -1,0 +1,29 @@
+to start express server, do this in terminal: 
+npm init -y
+npm i express
+npm i --save-dev nodemon
+then in the json file, put "devStart" inside of scripts and after the colon put 
+"nodemon [servername].js" 
+then, the server can be continuosly ran with "npm run devStart"
+By doing it like this, you wont have to continuosly re start the server manually through the terminal.
+An example of this is in the file package.json
+----------------------------
+Helpful git hub stuff to remember. These are REMINDERS, not a full tutorial:
+to add:
+git add .
+git commit -m "message describing to commit"
+git push -u origin main
+this pushes to main branch in the github, so now your code is saved in github.
+to push to a branch instead, first make a branch with:
+git checkout -b [branch-name]
+then, add to the branch:
+git add .
+Now, we can push that branch to githubgit push origin new-branch
+then, through github, do a pull request to merge the branch. New changes should be done in a branch,
+and later merged so that we don't accidentally overwrite progress.
+If you need to update your code to match what is in github, we must pull them. do:
+git pull origin master
+Make sure you commit your changes and push them to github, and try to keep up to date with what is on github.
+If you pull without saving your own progress, your progress may be overwritten.
+----------------------------------
+
