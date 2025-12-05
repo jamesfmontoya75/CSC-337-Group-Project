@@ -1,4 +1,59 @@
 <!DOCTYPE html>
+<style>
+    html{
+        height: 100%;
+        padding: none;
+    }
+    body{
+        height: 100%;
+        padding: none;
+        position: relative;
+        left: -8px;
+    }
+    #main_container{
+        height: 100%;
+        padding: none;
+        position: relative;
+    }
+    #navbar{
+        width: 10%;
+        height: 101%;
+        background-color: green;
+        float: left;
+        position:relative;
+        top: -8px;
+        padding: 20px;
+        }
+    #content{
+        position: relative;
+        top: -8px;
+        height: 101%;
+        background-color: lightcoral;
+        width: 85%;
+        float: left;
+        padding: 20px;
+    }
+    .link{
+        font-size: 50px;
+        display: block;
+    }
+    #navhead{
+        font-size: 40px;
+    }
+</style>
 <html>
-    <body></body>
+    <div id="main_container">
+    <body style="background-color: lightblue;">
+        <div id="navbar">
+            <header id="navhead">Navigation</header>
+            <a class = "link" href="index.html">Home</a>
+            <a class = "link" href="#">Portfolio</a>
+            <a class = "link" href="#">Contact</a>
+        </div>
+        <div id="content">
+            <h1 style="font-size: 50px;">About me</h1>
+            <p>At Mockbuster, you can easily rent from a wide selection of movies.</p>
+        </div>
+    </div>
+    </body>
 </html>
