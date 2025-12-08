@@ -4,24 +4,23 @@
         height: 100%;
     }
     body{
-        height: 100%;
+        height: 102%;
+        background-color: lightblue;
+        padding: 0px;
         margin: 0px;
-    }
-    #main_container{
-        height: 100%;
-        padding: none;
         position: relative;
+        top: -30px;
     }
     #navbar{
         text-align: center;
         width: 15%;
-        height: 101%;
+        height: 90%;
         background-color: green;
         float: left;
         }
     #content{
         text-align: center;
-        height: 101%;
+        height: 90%;
         background-color: lightcoral;
         width: 85%;
         float: left;
@@ -33,13 +32,37 @@
     #navhead{
         font-size: 40px;
     }
+    #headsection{
+            height: 10%;
+            font-size: 20px;
+            background-color: red;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+    #header{
+            text-align: center;
+            position:relative;
+            top: 25%;
+        }
+    #logoutButton{
+            text-align: right;
+            position:absolute;
+            right: 0%;
+        }  
 </style>
 <html>
-    <div id="main_container">
     <body style="background-color: lightblue;">
+        <div id="headsection">
+            <form action="logout">
+                <input id="logoutButton" type="submit" value="Logout">
+            </form>
+            <h1 id= "header">Mockbuster</h1>
+        </div>
+
         <div id="navbar">
             <header id="navhead">Navigation</header>
-            <a class = "link" href="index.html">Home</a>
+            <a class = "link" href="/home">Home</a>
             <a class = "link" href="#">Portfolio</a>
             <a class = "link" href="#">Contact</a>
         </div>
@@ -47,6 +70,5 @@
             <h1 style="font-size: 50px;">About me</h1>
             <p>At Mockbuster, you can easily rent from a wide selection of movies.</p>
         </div>
-    </div>
     </body>
 </html>

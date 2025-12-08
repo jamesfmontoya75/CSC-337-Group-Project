@@ -77,6 +77,16 @@ app.get("/home", (req, res)=>{
     res.end(htmlcontent)
 })
 
+app.get("/about", (req, res)=>{
+    var htmlcontent = ''
+    try{
+        htmlcontent = fs.readFileSync('about.html', {'encoding' : 'utf8'})
+    }catch(err){
+        console.log(err)
+    }
+    res.end(htmlcontent)
+})
+
 app.listen(8080, function(){
     console.log("Server Running")
 })
