@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jamesfmontoya75/CSC-337-Group-Project#readme",
   "dependencies": {
     "express": "^5.2.1",
+    "express-session": "^1.18.2",
     "mongodb": "^7.0.0",
     "mongoose": "^9.0.1"
   },
