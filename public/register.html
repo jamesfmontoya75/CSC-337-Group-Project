@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="./styles/general.css"/>
     <style>
         body{
-            background-color: lightblue;
             margin: 0px;
         }
         #header{
             font-size: 75px;
-            background-color: lightcoral;
         }
 
         #inputsection {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         form {
-            background-color: lightcoral;
             padding: 20px;
+            background-color: yellow;
+        }
+
+        a {
+            margin-top: 5px;
         }
 
         #usernameinput, #passwordinput, #confirm-passwordinput, #submituserinfo {
             text-align: center;
-            margin: 10px 0px;
-            font-size: large;
+            margin: 5px 0px;
+            font-size: x-large;
+            padding: 10px;
+            background-color: black;
+            color: yellow;
+            border: none;
+            border-radius: 25px;
+        }
+
+        a {
+            margin-top: 5px;
         }
         
-        
+        #register-title {
+            color: black;
+            text-align: center;
+        }
     </style>
     <body>
         <title>Register</title>
         <h1 id= "header" style="text-align: center;">Welcome to Mockbuster!</h1>
         <div id="inputsection">
             <form method ="POST" action="register-action">
+                <h2 id="register-title">Register</h2>
                 <input id="usernameinput" type="text" placeholder="Username" name="username">
                 <br>
                 <input id="passwordinput" type="password" placeholder="Password" name="password">
                 <br>
                 <input id="confirm-passwordinput" type="password" placeholder="Confirm Password" name="confirm-password">
                 <br><br>
-                <input id="submituserinfo" type="submit">
+                <button id="submitButton" type="submit">Register</button>
+                
             </form>
-            
+            <a href="/login">Login</a>
         </div>
     </body>
 </html>
