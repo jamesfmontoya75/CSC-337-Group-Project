@@ -1,8 +1,12 @@
+
 body {
     background-color: black;
     color: yellow;
     font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
 }
+
 
 a {
     color: yellow;
@@ -14,18 +18,18 @@ button {
     border-radius: 5px;
     color: black;
     background-color: yellow;
-    font-family: 'Courier New', monospace;
-    padding: 5px;
+    padding: 5px 10px;
+    transition: 0.25s;
 }
 
 button:hover {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: pointer;
 }
 
 input::placeholder { 
     color: yellow; 
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 
@@ -41,6 +45,77 @@ form {
     border-radius: 5px;
     color: yellow;
     background-color: black;
-    font-family: 'Courier New', monospace;
     padding: 10px;
+}
+
+#headsection {
+    height: 60px;
+    width: 100%;
+    background: black;
+    border-bottom: 2px solid yellow;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+}
+
+#headsection h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 2px;
+}
+
+#logoutButton {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    background: yellow;
+    color: black;
+    padding: 6px 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+#logoutButton:hover {
+    background: gold;
+    box-shadow: 0 0 10px gold;
+}
+
+#navbar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 210px;
+    height: calc(100vh - 60px);
+    background: black;
+    border-right: 2px solid yellow;
+    padding: 20px;
+}
+
+#navbar .link {
+    display: block;
+    color: black;
+    background: yellow;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#navbar .link:hover {
+    background: gold;
+}
+
+#content {
+    margin-left: 250px;    
+    margin-top: 90px;        
+    text-align: center;
 }
