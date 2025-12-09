@@ -7,128 +7,177 @@
     <style>
         body {
             margin: 0;
-            background-color: black;
-            color: yellow;
+            height: 100vh;
+            background: #000;
             font-family: "Courier New", monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        #header {
-            font-size: 70px;
-            margin-top: 40px;
-            text-align: center;
-            text-shadow: 0 0 12px yellow, 0 0 25px gold;
-            animation: glowPulse 2.5s infinite ease-in-out;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { text-shadow: 0 0 15px yellow; }
-            50% { text-shadow: 0 0 35px gold; }
-        }
-
-        /* Register Container */
-        #inputsection {
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            margin-top: 20px;
+            color: yellow;
+        }
+
+        .grid-bg {
+            position: absolute;
             width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(255,255,0,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,0,0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 8s linear infinite;
+            z-index: -2;
         }
 
-        /* Form Card */
-        form {
-            padding: 30px;
-            background-color: rgba(255, 255, 0, 0.95);
-            border-radius: 20px;
-            width: 350px;
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 80px 80px; }
+        }
+
+        .glow-orb {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255,255,0,0.5), transparent);
+            filter: blur(60px);
+            animation: floatOrb 6s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes floatOrb {
+            from { transform: translate(0,0); }
+            to { transform: translate(40px, -40px); }
+        }
+
+        .orb1 { top: 10%; left: 10%; }
+        .orb2 { bottom: 15%; right: 15%; animation-delay: 1s; }
+
+      
+        #header {
+            font-size: 65px;
             text-align: center;
-            box-shadow: 0 0 20px yellow;
-            animation: fadeIn 0.7s ease-out;
+            width: 100%;
+            position: absolute;
+            top: 40px;
+            color: yellow;
+            text-shadow: 0 0 15px yellow, 0 0 40px gold, 0 0 80px yellow;
+            animation: titlePulse 2.5s infinite ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes titlePulse {
+            0%, 100% { text-shadow: 0 0 20px yellow, 0 0 60px gold; transform: scale(1); }
+            50% { text-shadow: 0 0 40px gold, 0 0 120px yellow; transform: scale(1.05); }
+        }
+
+        .center-wrapper {
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        form {
+            background: rgba(0,0,0,0.65);
+            padding: 35px;
+            width: 380px;
+            border-radius: 22px;
+            border: 2px solid rgba(255,255,0,0.5);
+            backdrop-filter: blur(8px);
+            box-shadow:
+                0 0 20px rgba(255,255,0,0.5),
+                inset 0 0 20px rgba(255,255,0,0.2);
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         #register-title {
             font-size: 28px;
             margin-bottom: 20px;
-            color: black;
-            text-shadow: 0 0 5px gold;
+            color: yellow;
+            text-shadow: 0 0 10px gold;
         }
 
-        /* Input Fields */
         input {
-            width: 85%;
-            margin: 10px 0;
+            width: 90%;
             padding: 12px;
-            border-radius: 30px;
+            margin: 12px 0;
+            border-radius: 25px;
             border: none;
-            outline: none;
-            font-size: 18px;
             background: black;
             color: yellow;
+            font-size: 18px;
             text-align: center;
-            transition: 0.25s;
+            transition: 0.3s;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,255,0,0.2);
         }
 
         input::placeholder {
-            color: #aaaaaa;
+            color: rgba(255,255,255,0.4);
         }
 
         input:focus {
-            box-shadow: 0 0 12px gold;
-            transform: scale(1.03);
+            box-shadow: 0 0 20px gold;
+            transform: scale(1.05);
         }
 
-        /* Register Button */
         #submitButton {
-            width: 90%;
+            width: 95%;
             padding: 12px;
             margin-top: 20px;
-            border-radius: 30px;
-            border: none;
-            background: black;
-            color: yellow;
             font-size: 20px;
+            border: none;
+            border-radius: 30px;
+            background: yellow;
+            color: black;
             cursor: pointer;
             transition: 0.3s ease;
+            box-shadow:
+                0 0 15px yellow,
+                inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         #submitButton:hover {
-            background: yellow;
-            color: black;
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px gold;
+            background: black;
+            color: yellow;
+            transform: scale(1.05);
+            box-shadow:
+                0 0 25px gold,
+                0 0 50px yellow;
         }
 
-        /* Login Link */
         a {
-            margin-top: 15px;
+            margin-top: 18px;
             color: yellow;
-            font-size: 18px;
             text-decoration: none;
-            transition: 0.3s;
+            font-size: 18px;
+            transition: 0.3s ease;
+            display: inline-block;
         }
 
         a:hover {
+            text-shadow: 0 0 10px gold, 0 0 20px yellow;
             color: gold;
-            text-shadow: 0 0 10px gold;
         }
     </style>
 </head>
 
 <body>
 
+  
+    <div class="grid-bg"></div>
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+
+   
     <h1 id="header">Welcome to Mockbuster!</h1>
 
-    <div id="inputsection">
+    <div class="center-wrapper">
         <form method="POST" action="register-action">
             <h2 id="register-title">Create Your Account</h2>
 
