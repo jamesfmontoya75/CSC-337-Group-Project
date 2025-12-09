@@ -1,40 +1,40 @@
 {
   "horror": [
-    { "title": "Sinners", "director": "Ryan Coogler", "year": 2025, "genre": "Horror", "cover": "./public/images/sinners.png" },
-    { "title": "Get Out", "director": "Jordan Peele", "year": 2017, "genre": "Horror", "cover": "./public/images/get_out.jpg" },
-    { "title": "Hereditary", "director": "Ari Aster", "year": 2018, "genre": "Horror", "cover": "./public/images/hereditary.png" },
-    { "title": "Scream", "director": "Wes Craven", "year": 1996, "genre": "Horror", "cover": "./public/images/scream.jpg" },
-    { "title": "Halloween", "director": "John Carpenter", "year": 1978, "genre": "Horror", "cover": "./public/images/halloween.jpg" },
-    { "title": "Friday the 13th", "director": "Sean Cunningham", "year": 1980, "genre": "Horror", "cover": "./public/images/friday-the-13th.jpg" },
-    { "title": "A Nightmare On Elm Street", "director": "Wes Craven", "year": 1984, "genre": "Horror", "cover": "./public/images/nightmare_on_elm_st.jpg" },
-    { "title": "Candyman", "director": "Bernard Rose", "year": 1992, "genre": "Horror", "cover": "./public/images/candyman.jpg" },
-    { "title": "The Silence of the Lambs", "director": "Jonathan Demme", "year": 1991, "genre": "Horror", "cover": "./public/images/silence_of_the_lambs.jpg" },
-    { "title": "Us", "director": "Jordan Peele", "year": 2019, "genre": "Horror", "cover": "./public/images/us.png" }
+    { "title": "Sinners", "director": "Ryan Coogler", "year": 2025, "genre": "Horror", "cover": "/images/sinners.png" },
+    { "title": "Get Out", "director": "Jordan Peele", "year": 2017, "genre": "Horror", "cover": "/images/get_out.jpg" },
+    { "title": "Hereditary", "director": "Ari Aster", "year": 2018, "genre": "Horror", "cover": "/images/hereditary.png" },
+    { "title": "Scream", "director": "Wes Craven", "year": 1996, "genre": "Horror", "cover": "/images/scream.jpg" },
+    { "title": "Halloween", "director": "John Carpenter", "year": 1978, "genre": "Horror", "cover": "/images/halloween.jpg" },
+    { "title": "Friday the 13th", "director": "Sean Cunningham", "year": 1980, "genre": "Horror", "cover": "/images/friday-the-13th.jpg" },
+    { "title": "A Nightmare On Elm Street", "director": "Wes Craven", "year": 1984, "genre": "Horror", "cover": "/images/nightmare_on_elm_st.jpg" },
+    { "title": "Candyman", "director": "Bernard Rose", "year": 1992, "genre": "Horror", "cover": "/images/candyman.jpg" },
+    { "title": "The Silence of the Lambs", "director": "Jonathan Demme", "year": 1991, "genre": "Horror", "cover": "/images/silence_of_the_lambs.jpg" },
+    { "title": "Us", "director": "Jordan Peele", "year": 2019, "genre": "Horror", "cover": "/images/us.png" }
   ],
 
   "romantic": [
-    { "title": "Me Before You", "director": "Thea Sharrock", "year": 2016, "genre": "Romantic", "cover": "./public/images/me-before-you.jpg" },
-    { "title": "Veer-Zaara", "director": "Yash Chopra", "year": 2004, "genre": "Romantic", "cover": "./public/images/veer-zaara.jpg" },
-    { "title": "Devdas", "director": "Sanjay Leela Bhansali", "year": 2002, "genre": "Romantic", "cover": "./public/images/devdas.jpg" },
-    { "title": "La La Land", "director": "Damien Chazelle", "year": 2016, "genre": "Romantic", "cover": "./public/images/la-la-land.webp" },
-    { "title": "Pride and Prejudice", "director": "Jane Austen", "year": 1813, "genre": "Romantic", "cover": "./public/images/pride-and-prejudice.jpg" },
-    { "title": "Om Shanti Om", "director": "Farah Khan", "year": 2007, "genre": "Romantic", "cover": "./public/images/om-shanti-om.jpg" },
-    { "title": "How to Lose a Guy in 10 Days", "director": "Donald Petrie", "year": 2003, "genre": "Romantic", "cover": "./public/images/how-to-lose-a-guy-in-ten-days.jpg" },
-    { "title": "Titanic", "director": "James Cameron", "year": 1997, "genre": "Romantic", "cover": "./public/images/titanic.jpg" },
-    { "title": "Crazy Rich Asians", "director": "Jon M. Chu", "year": 2018, "genre": "Romantic", "cover": "./public/images/crazy-rich-asians.jpg" },
-    { "title": "Lucky: No Time for Love", "director": "Radhika Rao & Vinay Sapru", "year": 2005, "genre": "Romantic", "cover": "./public/images/sanam-teri-kasam.jpg" }
+    { "title": "Me Before You", "director": "Thea Sharrock", "year": 2016, "genre": "Romantic", "cover": "/images/me-before-you.jpg" },
+    { "title": "Veer-Zaara", "director": "Yash Chopra", "year": 2004, "genre": "Romantic", "cover": "/images/veer-zaara.jpg" },
+    { "title": "Devdas", "director": "Sanjay Leela Bhansali", "year": 2002, "genre": "Romantic", "cover": "/images/devdas.jpg" },
+    { "title": "La La Land", "director": "Damien Chazelle", "year": 2016, "genre": "Romantic", "cover": "/images/la-la-land.webp" },
+    { "title": "Pride and Prejudice", "director": "Jane Austen", "year": 1813, "genre": "Romantic", "cover": "/images/pride-and-prejudice.jpg" },
+    { "title": "Om Shanti Om", "director": "Farah Khan", "year": 2007, "genre": "Romantic", "cover": "/images/om-shanti-om.jpg" },
+    { "title": "How to Lose a Guy in 10 Days", "director": "Donald Petrie", "year": 2003, "genre": "Romantic", "cover": "/images/how-to-lose-a-guy-in-ten-days.jpg" },
+    { "title": "Titanic", "director": "James Cameron", "year": 1997, "genre": "Romantic", "cover": "/images/titanic.jpg" },
+    { "title": "Crazy Rich Asians", "director": "Jon M. Chu", "year": 2018, "genre": "Romantic", "cover": "/images/crazy-rich-asians.jpg" },
+    { "title": "Lucky: No Time for Love", "director": "Radhika Rao & Vinay Sapru", "year": 2005, "genre": "Romantic", "cover": "/images/sanam-teri-kasam.jpg" }
   ],
 
   "action": [
-    { "title": "Kill Bill: Vol 1", "director": "Quentin Tarantino", "year": 2003, "genre": "Action", "cover": "./public/images/kill_bill1.png" },
-    { "title": "Avengers: Infinity War", "director": "Anthony Russo", "year": 2018, "genre": "Action", "cover": "./public/images/infinity-war.jpg" },
-    { "title": "Enter the Dragon", "director": "Robert Clouse", "year": 1973, "genre": "Action", "cover": "./public/images/enter-the-dragon.jpg" },
-    { "title": "The Hunger Games", "director": "Gary Ross", "year": 2012, "genre": "Action", "cover": "./public/images/hunger-games.webp" },
-    { "title": "The Batman", "director": "Matt Reeves", "year": 2022, "genre": "Action", "cover": "./public/images/the-batman.avif" },
-    { "title": "Avatar", "director": "James Cameron", "year": 2009, "genre": "Action", "cover": "./public/images/avatar.jpg" },
-    { "title": "John Wick", "director": "Chad Stahelski", "year": 2014, "genre": "Action", "cover": "./public/images/john-wick.jpg" },
-    { "title": "Mission: Impossible – The Final Reckoning", "director": "Christopher McQuarrie", "year": 2025, "genre": "Action", "cover": "./public/images/mission-impossible.jpg" },
-    { "title": "Black Panther", "director": "Ryan Coogler", "year": 2018, "genre": "Action", "cover": "./public/images/black-panther.jpg" },
-    { "title": "The Fall Guy", "director": "David Leitch", "year": 2024, "genre": "Action", "cover": "./public/images/the-fall-guy.jpg" }
+    { "title": "Kill Bill: Vol 1", "director": "Quentin Tarantino", "year": 2003, "genre": "Action", "cover": "/images/kill_bill1.png" },
+    { "title": "Avengers: Infinity War", "director": "Anthony Russo", "year": 2018, "genre": "Action", "cover": "/images/infinity-war.jpg" },
+    { "title": "Enter the Dragon", "director": "Robert Clouse", "year": 1973, "genre": "Action", "cover": "/images/enter-the-dragon.jpg" },
+    { "title": "The Hunger Games", "director": "Gary Ross", "year": 2012, "genre": "Action", "cover": "/images/hunger-games.webp" },
+    { "title": "The Batman", "director": "Matt Reeves", "year": 2022, "genre": "Action", "cover": "/images/the-batman.avif" },
+    { "title": "Avatar", "director": "James Cameron", "year": 2009, "genre": "Action", "cover": "/images/avatar.jpg" },
+    { "title": "John Wick", "director": "Chad Stahelski", "year": 2014, "genre": "Action", "cover": "/images/john-wick.jpg" },
+    { "title": "Mission: Impossible – The Final Reckoning", "director": "Christopher McQuarrie", "year": 2025, "genre": "Action", "cover": "/images/mission-impossible.jpg" },
+    { "title": "Black Panther", "director": "Ryan Coogler", "year": 2018, "genre": "Action", "cover": "/images/black-panther.jpg" },
+    { "title": "The Fall Guy", "director": "David Leitch", "year": 2024, "genre": "Action", "cover": "/images/the-fall-guy.jpg" }
   ]
 }
