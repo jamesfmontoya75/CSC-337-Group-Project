@@ -1,46 +1,156 @@
+/* ===========================
+   GLOBAL PAGE STYLE
+   =========================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Animated neon-style background */
 body {
     background-color: black;
     color: yellow;
     font-family: 'Courier New', monospace;
+    overflow-x: hidden;
+    text-shadow: 0 0 8px rgba(255,255,0,0.7);
+
+    /* Subtle animated grid background */
+    background-image:
+        linear-gradient(rgba(255,255,0,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,0,0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: bgFloat 30s linear infinite;
+}
+
+/* Smooth animation across site */
+* {
+    transition: 0.3s ease;
+}
+
+/* Background animation keyframes */
+@keyframes bgFloat {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 60px 60px;
+    }
+}
+
+/* Optional glowing text utility (use class="neon-text" on elements) */
+.neon-text {
+    text-shadow:
+        0 0 6px yellow,
+        0 0 14px gold,
+        0 0 24px yellow;
+}
+
+/* ===========================
+   HEADER + LOGOUT BUTTON
+   =========================== */
+#headsection {
+    background: black;
+    border-bottom: 2px solid yellow;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 0 20px yellow;
+    z-index: 100;
+}
+
+#header {
+    font-size: 40px;
+    color: yellow;
+    margin: 0;
+    text-shadow: 0 0 12px yellow, 0 0 25px gold;
+}
+
+/* Logout in top-right corner */
+#logoutButton {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}
+
+/* ===========================
+   BUTTONS
+   =========================== */
+button {
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    background-color: yellow;
+    padding: 8px 14px;
+    cursor: pointer;
+    box-shadow: 0 0 12px yellow;
+}
+
+button:hover {
+    background-color: gold;
+    box-shadow: 0 0 18px gold, 0 0 25px yellow;
+    transform: scale(1.08);
+}
+
+
+input {
+    background-color: black;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    color: yellow;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 12px rgba(255,255,0,0.4);
+}
+
+input:focus {
+    border-color: gold;
+    box-shadow: 0 0 20px gold;
+    transform: scale(1.05);
+}
+
+input::placeholder {
+    color: yellow;
+    opacity: 0.6;
 }
 
 a {
     color: yellow;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-button {
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    color: black;
-    background-color: yellow;
-    font-family: 'Courier New', monospace;
-    padding: 5px;
+a:hover {
+    color: gold;
+    text-shadow: 0 0 15px gold;
+    transform: scale(1.03);
 }
-
-button:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-input::placeholder { 
-    color: yellow; 
-    opacity: 0.5;
-}
-
 
 form {
+    background-color: rgba(255,255,0,0.12);
+    border: 1px solid yellow;
+    border-radius: 12px;
     padding: 20px;
-    background-color: yellow;
-    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255,255,0,0.4);
 }
 
+
 #submitButton {
-    font-size: 23px;
-    border: none;
-    border-radius: 5px;
-    color: yellow;
+    font-size: 22px;
     background-color: black;
-    font-family: 'Courier New', monospace;
-    padding: 10px;
+    color: yellow;
+    border-radius: 20px;
+    padding: 12px 18px;
+    box-shadow: 0 0 14px yellow;
+}
+
+#submitButton:hover {
+    background-color: yellow;
+    color: black;
+    box-shadow: 0 0 25px gold;
 }

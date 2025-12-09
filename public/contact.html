@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - Mockbuster</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: "Courier New", monospace;
+      color: yellow;
+      overflow-x: hidden;
+    }
+
+    .grid-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(255,255,0,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,0,0.12) 1px, transparent 1px);
+      background-size: 55px 55px;
+      animation: gridMove 14s linear infinite;
+      z-index: -3;
+      opacity: 0.45;
+    }
+
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to { background-position: 55px 55px; }
+    }
+
+
+    .glow-orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255,255,0,0.5), transparent);
+      filter: blur(65px);
+      animation: floatOrb 7s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes floatOrb {
+      from { transform: translate(0, 0); }
+      to { transform: translate(45px, -40px); }
+    }
+
+    .orb1 { top: 15%; left: 8%; }
+    .orb2 { bottom: 15%; right: 10%; animation-delay: 1s; }
+
+    #headsection {
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid yellow;
+      position: relative;
+      background-color: rgba(0,0,0,0.8);
+      box-shadow: 0 0 15px yellow;
+    }
+
+    #header {
+      font-size: 45px;
+      text-shadow: 0 0 15px yellow, 0 0 40px gold;
+      animation: pulseTitle 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseTitle {
+      0%,100% { text-shadow: 0 0 15px yellow; }
+      50% { text-shadow: 0 0 35px gold; }
+    }
+
+    #logoutButton {
+      position: absolute;
+      right: 20px;
+      background-color: yellow;
+      color: black;
+      border: none;
+      padding: 8px 15px;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    #logoutButton:hover {
+      box-shadow: 0 0 15px gold;
+      background-color: gold;
+    }
+
+    #main {
+      display: flex;
+      height: calc(100vh - 80px);
+    }
+
+    #navbar {
+      width: 240px;
+      background-color: rgba(0,0,0,0.85);
+      border-right: 2px solid yellow;
+      text-align: center;
+      padding-top: 25px;
+      box-shadow: 4px 0 14px rgba(255,255,0,0.4);
+    }
+
+    #navhead {
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px yellow;
+    }
+
+    .link {
+      display: block;
+      background-color: yellow;
+      color: black;
+      margin: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+      transition: 0.25s ease;
+    }
+
+    .link:hover {
+      background-color: gold;
+      transform: scale(1.07);
+      box-shadow: 0 0 15px gold;
+    }
+
+    #content {
+      flex: 1;
+      padding: 40px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 0;
+      border-bottom: 3px solid yellow;
+      padding-bottom: 12px;
+      text-shadow: 0 0 12px yellow;
+    }
+
+    .contact-box {
+      background-color: rgba(0,0,0,0.7);
+      border: 2px solid yellow;
+      border-radius: 20px;
+      padding: 30px;
+      width: 480px;
+      margin-top: 40px;
+      box-shadow: 0 0 25px rgba(255,255,0,0.4);
+      animation: floatForm 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatForm {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
+    input, textarea {
+      width: 90%;
+      background-color: black;
+      color: yellow;
+      border: none;
+      margin: 12px 0;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(255,255,0,0.3);
+    }
+
+    input:focus, textarea:focus {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px gold;
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    #sendButton {
+      background-color: yellow;
+      color: black;
+      width: 92%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 18px yellow;
+    }
+
+    #sendButton:hover {
+      background-color: gold;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px gold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="grid-bg"></div>
+  <div class="glow-orb orb1"></div>
+  <div class="glow-orb orb2"></div>
+
+  <div id="headsection">
+    <form action="logout">
+      <input id="logoutButton" type="submit" value="Logout">
+    </form>
+    <h1 id="header">Mockbuster</h1>
+  </div>
+
+  <div id="main">
+
+    <div id="navbar">
+      <h2 id="navhead">Navigation</h2>
+      <a class="link" href="/home">Home</a>
+      <a class="link" href="/about">About</a>
+      <a class="link" href="#">Contact</a>
+    </div>
+
+    <div id="content">
+      <h1>Contact Us</h1>
+      <p>If you have any questions, feedback, or movie suggestions, feel free to contact us!</p>
+
+      <div class="contact-box">
+        <form action="send-message" method="POST">
+
+          <input type="text" name="name" placeholder="Your Name" required>
+
+          <input type="email" name="email" placeholder="Your Email" required>
+
+          <textarea name="message" placeholder="Your Message..." required></textarea>
+
+          <button id="sendButton" type="submit">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

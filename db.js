@@ -3,7 +3,7 @@ const { MongoClient } = require("mongodb");
 
 // --- CHANGE THIS TO YOUR OWN CONNECTION STRING ---
 const MONGO_URL = "mongodb://127.0.0.1:27017";  // local MongoDB
-const DB_NAME = "";
+const DB_NAME = "mockbuster_db";
 
 let db = null;
 
