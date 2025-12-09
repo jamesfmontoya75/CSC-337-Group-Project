@@ -3,6 +3,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
+const bcrypt = require("bcrypt");
 
 // --- MongoDB helper ---
 const { connectDB, getDB } = require("./db");
@@ -53,17 +54,41 @@ app.get("/register", (req, res) => {
 
 // Register action
 app.post("/register-action", async (req, res) => {
-  const user = {
-    username: req.body.username,
-    password: req.body.password,
-    rentedMovies: [] // <---- important!
-  };
+  try {
+    const { username, password } = req.body;
 
-  await db.collection("users").insertOne(user);
+    // Check if user already exists
+    const existingUser = await db.collection("users").findOne({ username });
+    if (existingUser) {
+      return res.send(`
+        <h1>Username already taken. Try another.</h1>
+        <a href="/register">Back</a>
+      `);
+    }
 
-  req.session.user = user;
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  res.redirect("/home");
+    const newUser = {
+      username,
+      password: hashedPassword,   // store *hashed* password
+      rentedMovies: []
+    };
+
+    // Insert into DB
+    await db.collection("users").insertOne(newUser);
+
+    // Store SAFE user object in session (no password!)
+    req.session.user = {
+      username: newUser.username,
+      rentedMovies: newUser.rentedMovies
+    };
+
+    res.redirect("/home");
+  } catch (err) {
+    console.error("Register error:", err);
+    res.status(500).send("Server error");
+  }
 });
 
 // Login page
@@ -73,21 +98,42 @@ app.get("/login", (req, res) => {
 
 // Login action
 app.post("/login-action", async (req, res) => {
-  const user = await db.collection("users").findOne({
-    username: req.body.username,
-    password: req.body.password,
-  });
+  try {
+    const { username, password } = req.body;
 
-  if (!user) {
-    return res.send(`
-      <h1>Error 404: no such user found, please try again.</h1>
-      <a href="/login">Login</a>
-    `);
+    // Step 1: Find the user by username
+    const user = await db.collection("users").findOne({ username });
+
+    if (!user) {
+      return res.send(`
+        <h1>Error 404: no such user found, please try again.</h1>
+        <a href="/login">Login</a>
+      `);
+    }
+
+    // Step 2: Compare plaintext password with hashed stored password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.send(`
+        <h1>Incorrect password. Try again.</h1>
+        <a href="/login">Login</a>
+      `);
+    }
+
+    // Step 3: Store safe user data in session
+    req.session.user = {
+      username: user.username,
+      rentedMovies: user.rentedMovies || []
+    };
+
+    res.redirect("/home");
+
+  } catch (err) {
+    console.error("Login Error:", err);
+    res.status(500).send("Server error");
   }
-
-  req.session.user = user;
-  res.redirect("/home");
 });
+
 
 // home
 app.get("/home", requireLogin, (req, res) => {
@@ -109,7 +155,7 @@ app.get("/logout", (req, res) => {
 // =======================
 
 // serve movies.json for the frontend
-app.get("/movies", (req, res) => {
+app.get("/movies", requireLogin, (req, res) => {
   res.type("application/json");
   res.sendFile(path.join(__dirname, "movies.json"));
 });
@@ -313,18 +359,15 @@ app.post("/rent-movie", requireLogin, async (req, res) => {
     }
     
 
-    res.redirect("/movie/" + movieId);
+    res.redirect("/movie/"+movieId);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Server error");
   }
 });
 
-app.get("/rate-movie", (req, res)=>{
-  
-})
 
-app.get("/my-movies", async (req, res)=>{
+app.get("/my-movies", requireLogin,async (req, res)=>{
   const user = req.session.user;
 
   if (!user) {
@@ -338,12 +381,12 @@ app.get("/my-movies", async (req, res)=>{
   
 })
 
-app.get("/get-user", (req, res)=>{
+app.get("/get-user", requireLogin,(req, res)=>{
   res.type("application/json");
   res.send(req.session.user);
 })
 
-app.post("/view-movie", (req, res)=>{
+app.post("/view-movie", requireLogin,(req, res)=>{
   const movieId = req.body.movieId;
 
   const moviesData = JSON.parse(
@@ -513,31 +556,40 @@ app.post("/view-movie", (req, res)=>{
     </html>`)
 })
 
-app.post("/return-movie", requireLogin, async (req, res)=>{
+app.post("/return-movie", requireLogin, async (req, res) => {
   try {
     const user = req.session.user;
     const movieId = req.body.movieId;
 
     console.log("User returning:", user.username, "Movie:", movieId);
 
-    if(!user.rentedMovies.includes(movieId)){
-      console.log("You don't have this movie.")
-    }else{
-      // update session user object too
-      await db.collection("users").updateOne(
-      { username: user.username },
-      {
-        $addToSet: { rentedMovies: movieId } // prevents duplicates
-      }
-    );
+    // Check if user actually rented this movie
+    if (!user.rentedMovies.includes(movieId)) {
+      console.log("You don't have this movie.");
+      return res.redirect("/my-movies");
     }
+
+    // Remove from DB
+    await db.collection("users").updateOne(
+      { username: user.username },
+      { $pull: { rentedMovies: movieId } }  // <-- FIXED
+    );
+
+    // Also update the session copy
+    user.rentedMovies = user.rentedMovies.filter(id => id !== movieId);
+    req.session.user = user;
 
     res.redirect("/my-movies");
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Server error");
   }
-})
+});
+
+
+app.get("/contact", requireLogin,(req, res) => {
+  res.sendFile(path.join(__dirname, "public/contact.html"));
+});
 
 // =======================
 // START SERVER
