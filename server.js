@@ -5,19 +5,19 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 // In-memory "database"
-const users = [{username: 'adam', password: 'cool'}];
+const users = [{ username: 'adam', password: 'cool' }];
 
 // middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (HTML, images, CSS, JS)
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // SESSION middleware
 app.use(
   session({
-    secret: "mysecretkey",          
+    secret: "mysecretkey",
     resave: false,
     saveUninitialized: false,
   })
@@ -36,7 +36,6 @@ function requireLogin(req, res, next) {
 // Register page
 app.get("/register", (req, res) => {
   if (req.session.user) return res.redirect("/home");
-
   res.sendFile(path.join(__dirname, "public/register.html"));
 });
 
@@ -48,7 +47,6 @@ app.post("/register-action", (req, res) => {
   };
 
   users.push(user);
-
   req.session.user = user;
 
   res.redirect("/home");
@@ -63,9 +61,7 @@ app.get("/login", (req, res) => {
 app.post("/login-action", (req, res) => {
   console.log(req.body);
   const user = users.find(
-    (u) =>
-      u.username === req.body.username &&
-      u.password === req.body.password
+    (u) => u.username === req.body.username && u.password === req.body.password
   );
 
   if (!user) {
@@ -76,7 +72,6 @@ app.post("/login-action", (req, res) => {
   }
 
   req.session.user = user;
-
   res.redirect("/home");
 });
 
@@ -97,15 +92,20 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// movie info
-
-// Route to send JSON file
+// ------------------------
+// MOVIES JSON ROUTE
+// ------------------------
 app.get("/movies", (req, res) => {
-  res.sendFile(__dirname + "/movies.json");
+  res.type("application/json");
+  res.sendFile(path.join(__dirname, "movies.json"));
 });
 
+// Movie details page (static)
+app.get("/movie/:title", requireLogin, (req, res) => {
+  res.sendFile(path.join(__dirname, "public/movie.html"));
+});
 
-
+// Start server
 app.listen(8080, () => {
-  console.log("Server Running");
+  console.log("Server Running on http://localhost:8080");
 });
