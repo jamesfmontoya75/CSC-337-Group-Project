@@ -1,20 +1,22 @@
 const express = require("express");
 const session = require("express-session");
-const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
+const fs = require("fs");
 
-// In-memory "database"
-const users = [{ username: 'adam', password: 'cool' }];
+// --- MongoDB helper ---
+const { connectDB, getDB } = require("./db");
+
+const app = express();
 
 // middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files (HTML, images, CSS, JS)
+// static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// SESSION middleware
+// session
 app.use(
   session({
     secret: "mysecretkey",
@@ -23,15 +25,25 @@ app.use(
   })
 );
 
-// AUTH middleware
+// require login middleware
 function requireLogin(req, res, next) {
-  if (!req.session.user) {
-    return res.redirect("/login");
-  }
+  if (!req.session.user) return res.redirect("/login");
   next();
 }
 
-// ================= ROUTES =================
+// =======================
+// CONNECT TO MONGO FIRST
+// =======================
+let db;
+
+connectDB().then(() => {
+  db = getDB();
+  console.log("MongoDB connected.");
+});
+
+// =======================
+// AUTH ROUTES
+// =======================
 
 // Register page
 app.get("/register", (req, res) => {
@@ -40,13 +52,15 @@ app.get("/register", (req, res) => {
 });
 
 // Register action
-app.post("/register-action", (req, res) => {
+app.post("/register-action", async (req, res) => {
   const user = {
     username: req.body.username,
     password: req.body.password,
+    rentedMovies: [] // <---- important!
   };
 
-  users.push(user);
+  await db.collection("users").insertOne(user);
+
   req.session.user = user;
 
   res.redirect("/home");
@@ -58,15 +72,15 @@ app.get("/login", (req, res) => {
 });
 
 // Login action
-app.post("/login-action", (req, res) => {
-  console.log(req.body);
-  const user = users.find(
-    (u) => u.username === req.body.username && u.password === req.body.password
-  );
+app.post("/login-action", async (req, res) => {
+  const user = await db.collection("users").findOne({
+    username: req.body.username,
+    password: req.body.password,
+  });
 
   if (!user) {
     return res.send(`
-      <h1>Error 404: no such user found, please try to login again.</h1>
+      <h1>Error 404: no such user found, please try again.</h1>
       <a href="/login">Login</a>
     `);
   }
@@ -75,54 +89,53 @@ app.post("/login-action", (req, res) => {
   res.redirect("/home");
 });
 
-// Home page (protected)
+// home
 app.get("/home", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// About page (protected)
+// about
 app.get("/about", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "public/about.html"));
 });
 
-// Logout
+// logout
 app.get("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/login");
-  });
+  req.session.destroy(() => res.redirect("/login"));
 });
 
-// ------------------------
-// MOVIES JSON ROUTE
-// ------------------------
+// =======================
+// MOVIES COLLECTION API
+// =======================
+
+// serve movies.json for the frontend
 app.get("/movies", (req, res) => {
   res.type("application/json");
   res.sendFile(path.join(__dirname, "movies.json"));
 });
 
-// Movie details page (static)
-const fs = require("fs");
-
-// Route to show a specific movie by ID
+// show movie details page
 app.get("/movie/:id", requireLogin, (req, res) => {
-    const movieId = req.params.id;
+  const movieId = req.params.id;
 
-    // Load movies JSON
-    const moviesData = JSON.parse(fs.readFileSync(__dirname + "/movies.json", "utf-8"));
+  const moviesData = JSON.parse(
+    fs.readFileSync(__dirname + "/movies.json", "utf-8")
+  );
 
-    // Flatten all movies into a single array
-    const allMovies = [...moviesData.horror, ...moviesData.romantic, ...moviesData.action];
+  const allMovies = [
+    ...moviesData.horror,
+    ...moviesData.romantic,
+    ...moviesData.action,
+  ];
 
-    // Find the movie with the matching ID
-    const movie = allMovies.find(m => m.id == movieId);
+  const movie = allMovies.find((m) => m.id == movieId);
 
-    if (!movie) {
-        return res.status(404).send("Movie not found");
-    }
+  if (!movie) return res.status(404).send("Movie not found");
 
-    // Send HTML with movie details dynamically
-    res.send(`<!DOCTYPE html>
-<html>
+  // Same HTML you had before
+  res.send(`
+    <!DOCTYPE html>
+    <html>
     <link rel="stylesheet" href="/styles/general.css"/>
     <style>
         html{
@@ -239,17 +252,19 @@ app.get("/movie/:id", requireLogin, (req, res) => {
     </style>
     <body>
         <div id="headsection">
-           <form action="/logout" method="get">
+            <form action="/logout" method="get">
                 <button id="logoutButton" type="submit">Logout</button>
             </form>
             <h1 id="header">Mockbuster</h1>
         </div>
+
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
             <a class="link" href="/about">About</a>
             <a class="link" href="#">Portfolio</a>
             <a class="link" href="#">Contact</a>
         </div>
+
         <div id="content">
             <div id="movie-container">
                 <img class="cover" src="${movie.cover}" />
@@ -258,44 +273,53 @@ app.get("/movie/:id", requireLogin, (req, res) => {
                     <h4>Director: ${movie.director}</h4>
                     <h4>Released: ${movie.year}</h4>
                     <h4>Genre: ${movie.genre}</h4>
+
                     <form action="/rent-movie" method="post">
                        <input type="hidden" name="movieId" value="${movie.id}">
-                       <button id="submitButton" type="submit">Add Movie</button>
+                       <button type="submit">Add Movie</button>
                     </form>
                 </div>
             </div>
         </div>
     </body>
-</html>`);
+    </html>
+  `);
 });
 
+// =======================
+// RENT MOVIE (DB UPDATE)
+// =======================
+app.post("/rent-movie", requireLogin, async (req, res) => {
+  try {
+    const user = req.session.user;
+    const movieId = req.body.movieId;
 
+    console.log("User renting:", user.username, "Movie:", movieId);
 
-app.post("/rent-movie", (req, res) => {
-    try {
-        // req.body.value comes from the <input name="value">
-        console.log(req.body);
-        const id = req.body.movieId;
-        console.log("id", id);
-        //console.log("Rented movie:", movie);
+    await db.collection("users").updateOne(
+      { username: user.username },
+      {
+        $addToSet: { rentedMovies: movieId } // prevents duplicates
+      }
+    );
 
-        // TODO: Handle the rental logic here (save to DB, etc.)
-        
-        //res.send("Movie rented successfully!");
-        res.redirect("/movie/" + id);
-    } catch (err) {
-        console.error("Error processing /rent-movie:", err);
-        res.status(500).send("Server error");
-    }
+    // update session user object too
+    user.rentedMovies.push(movieId);
+
+    res.redirect("/movie/" + movieId);
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("Server error");
+  }
 });
 
 app.get("/rate-movie", (req, res)=>{
   
 })
 
-
-
-// Start server
+// =======================
+// START SERVER
+// =======================
 app.listen(8080, () => {
   console.log("Server Running on http://localhost:8080");
 });
