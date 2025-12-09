@@ -128,6 +128,10 @@
             <a class = "link" href="#">Contact</a>
         </div>
         <div id="content">
+            <div id="content">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>My Movies</h1>
+                </div>
             <!-- <div class="genreSection">
                 <div class="genreHead" style="text-align: left;">
                     <h1>My List</h1>
@@ -191,20 +195,27 @@
         try {
             const response = await fetch("/movies"); // fetch from server
             const data = await response.json();      // parse json
-
+            
             console.log(data);
+
+            const response2 = await fetch("/get-user");
+            const data2 = await response2.json();
+            console.log(response2);
+            const user = data2;
+
+            console.log(user)
 
             var sections = document.getElementsByClassName("genreSection")
             console.log(sections)
 
             var actionGenreSection = sections[0]
-            fillMovies(data.action, actionGenreSection)
+            fillMovies(data.action, actionGenreSection, user)
 
             var horrorSection = sections[1]
-            fillMovies(data.horror, horrorSection)
+            fillMovies(data.horror, horrorSection, user)
 
             var romanticSection = sections[2]
-            fillMovies(data.romantic, romanticSection)
+            fillMovies(data.romantic, romanticSection, user)
 
             console.log(data); // now you have access to all movies
 
@@ -216,30 +227,35 @@
         }
     }
 
-    function fillMovies(array, genreSection){
-        for(var i = 0; i<array.length; i++){
-            var coverForm = document.createElement("form")
-            coverForm.setAttribute("class", "cover_form")
-            coverForm.setAttribute("action", "/rent-movie")
-            coverForm.setAttribute("method", "post")
+    function fillMovies(array, genreSection, user){
+        for(var j = 0; j<user.rentedMovies.length; j++){
+            for(var i = 0; i<array.length; i++){
+                if(array[i].id == user.rentedMovies[j]){
+                    var coverForm = document.createElement("form")
+                    coverForm.setAttribute("class", "cover_form")
+                    coverForm.setAttribute("action", "/view-movie")
+                    coverForm.setAttribute("method", "post")
 
-            // Hidden input to send the movie id
-            var hiddenInput = document.createElement("input")
-            hiddenInput.setAttribute("type", "hidden")
-            hiddenInput.setAttribute("name", "movieId")
-            hiddenInput.value = array[i].id
-            coverForm.appendChild(hiddenInput)
+                    // Hidden input to send the movie id
+                    var hiddenInput = document.createElement("input")
+                    hiddenInput.setAttribute("type", "hidden")
+                    hiddenInput.setAttribute("name", "movieId")
+                    hiddenInput.value = array[i].id
+                    coverForm.appendChild(hiddenInput)
 
-            // Image button for submit
-            var input = document.createElement("input")
-            input.setAttribute("type", "image")
-            input.setAttribute("alt", "submit")
-            input.setAttribute("class", "cover")
-            input.setAttribute("src", array[i].cover)
-            coverForm.appendChild(input)
+                    // Image button for submit
+                    var input = document.createElement("input")
+                    input.setAttribute("type", "image")
+                    input.setAttribute("alt", "submit")
+                    input.setAttribute("class", "cover")
+                    input.setAttribute("src", array[i].cover)
+                    coverForm.appendChild(input)
 
-            genreSection.appendChild(coverForm)
+                    genreSection.appendChild(coverForm)
+                }
+            }
         }
+        
     }
 
 
