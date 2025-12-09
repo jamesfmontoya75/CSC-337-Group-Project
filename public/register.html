@@ -1,66 +1,146 @@
 <!DOCTYPE html>
-<html>
-    <link rel="stylesheet" href="./styles/general.css"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register - Mockbuster</title>
+
     <style>
-        body{
-            margin: 0px;
-        }
-        #header{
-            font-size: 75px;
-        }
-
-        #inputsection {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        form {
-            padding: 20px;
-            background-color: yellow;
-        }
-
-        a {
-            margin-top: 5px;
-        }
-
-        #usernameinput, #passwordinput, #confirm-passwordinput, #submituserinfo {
-            text-align: center;
-            margin: 5px 0px;
-            font-size: x-large;
-            padding: 10px;
+        body {
+            margin: 0;
             background-color: black;
             color: yellow;
-            border: none;
-            border-radius: 25px;
+            font-family: "Courier New", monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        a {
-            margin-top: 5px;
-        }
-        
-        #register-title {
-            color: black;
+        /* Header */
+        #header {
+            font-size: 70px;
+            margin-top: 40px;
             text-align: center;
+            text-shadow: 0 0 12px yellow, 0 0 25px gold;
+            animation: glowPulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 15px yellow; }
+            50% { text-shadow: 0 0 35px gold; }
+        }
+
+        /* Register Container */
+        #inputsection {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* Form Card */
+        form {
+            padding: 30px;
+            background-color: rgba(255, 255, 0, 0.95);
+            border-radius: 20px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 0 20px yellow;
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #register-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: black;
+            text-shadow: 0 0 5px gold;
+        }
+
+        /* Input Fields */
+        input {
+            width: 85%;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            background: black;
+            color: yellow;
+            text-align: center;
+            transition: 0.25s;
+        }
+
+        input::placeholder {
+            color: #aaaaaa;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px gold;
+            transform: scale(1.03);
+        }
+
+        /* Register Button */
+        #submitButton {
+            width: 90%;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 30px;
+            border: none;
+            background: black;
+            color: yellow;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background: yellow;
+            color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px gold;
+        }
+
+        /* Login Link */
+        a {
+            margin-top: 15px;
+            color: yellow;
+            font-size: 18px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: gold;
+            text-shadow: 0 0 10px gold;
         }
     </style>
-    <body>
-        <title>Register</title>
-        <h1 id= "header" style="text-align: center;">Welcome to Mockbuster!</h1>
-        <div id="inputsection">
-            <form method ="POST" action="register-action">
-                <h2 id="register-title">Register</h2>
-                <input id="usernameinput" type="text" placeholder="Username" name="username">
-                <br>
-                <input id="passwordinput" type="password" placeholder="Password" name="password">
-                <br>
-                <input id="confirm-passwordinput" type="password" placeholder="Confirm Password" name="confirm-password">
-                <br><br>
-                <button id="submitButton" type="submit">Register</button>
-                
-            </form>
-            <a href="/login">Login</a>
-        </div>
-    </body>
+</head>
+
+<body>
+
+    <h1 id="header">Welcome to Mockbuster!</h1>
+
+    <div id="inputsection">
+        <form method="POST" action="register-action">
+            <h2 id="register-title">Create Your Account</h2>
+
+            <input type="text" placeholder="Username" name="username" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <input type="password" placeholder="Confirm Password" name="confirm-password" required>
+
+            <button id="submitButton" type="submit">Register</button>
+        </form>
+
+        <a href="/login">Already have an account? Login</a>
+    </div>
+
+</body>
 </html>
