@@ -1,311 +1,256 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - Mockbuster</title>
 
-body {
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    background: #000;
-    color: #FFF200;
-    overflow-x: hidden;
-
-    background-image:
-        linear-gradient(rgba(255,230,0,0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,230,0,0.12) 1px, transparent 1px);
-    background-size: 60px 60px;
-
-    animation: bgMove 30s linear infinite, bgGlow 5s ease-in-out infinite;
-}
-
-.cover_form{
-    display:inline;
-    width: 10%;
-    height: 85%;
-}
-
-.genreHead{
-    text-align: left;
-}
-
-.cover{
-    height: 85%;
-    width: 10%;
-}
-#navbar {
-    position: fixed;
-    top: 55px;                   /* matches header height */
-    left: 0;
-    width: 200px;                /* clean, consistent width */
-    height: calc(100vh - 55px); /* fill page below header */
-
-    background: black;
-    border-right: 1px solid yellow;
-
-    display: flex;
-    flex-direction: column;
-    gap: 15px;                   /* spacing between links */
-    
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 5;
-}
-
-#navbar .link {
-        color: black;
-        text-decoration: none;
-        font-size: 18px;
-        padding: 5px 0;
-        background-color: yellow;
-        padding: 2.5px;
-        font-weight: 600;
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: "Courier New", monospace;
+      color: yellow;
+      overflow-x: hidden;
     }
 
-#navbar .link:hover {
-            opacity: 0.6;
-        }
+    .grid-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(255,255,0,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,0,0.12) 1px, transparent 1px);
+      background-size: 55px 55px;
+      animation: gridMove 14s linear infinite;
+      z-index: -3;
+      opacity: 0.45;
+    }
 
-    #navhead{
-            font-size: x-large;
-            font-weight: 600;
-        }
-
-        .genreSection {
-            text-align: left;
-        }
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to { background-position: 55px 55px; }
+    }
 
 
-@keyframes bgMove {
-    from { background-position: 0 0; }
-    to   { background-position: 60px 60px; }
-}
+    .glow-orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255,255,0,0.5), transparent);
+      filter: blur(65px);
+      animation: floatOrb 7s ease-in-out infinite alternate;
+      z-index: -2;
+    }
 
-@keyframes bgGlow {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.3); }
-}
+    @keyframes floatOrb {
+      from { transform: translate(0, 0); }
+      to { transform: translate(45px, -40px); }
+    }
 
-.fog {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    width: 1200px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(255,200,0,0.4), transparent 70%);
-    filter: blur(55px);
-    transform: translate(-50%, -50%);
-    animation: fogPulse 6s ease-in-out infinite alternate;
-    z-index: -20;
-}
+    .orb1 { top: 15%; left: 8%; }
+    .orb2 { bottom: 15%; right: 10%; animation-delay: 1s; }
 
-@keyframes fogPulse {
-    from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    to   { opacity: 1; transform: translate(-50%, -53%) scale(1.15); }
-}
+    #headsection {
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid yellow;
+      position: relative;
+      background-color: rgba(0,0,0,0.8);
+      box-shadow: 0 0 15px yellow;
+    }
 
-.beam {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #FFD500, transparent);
-    opacity: 0.7;
-    animation: beamMove linear infinite;
-    z-index: -15;
-}
+    #header {
+      font-size: 45px;
+      text-shadow: 0 0 15px yellow, 0 0 40px gold;
+      animation: pulseTitle 3s infinite ease-in-out;
+    }
 
-@keyframes beamMove {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(100%); }
-}
+    @keyframes pulseTitle {
+      0%,100% { text-shadow: 0 0 15px yellow; }
+      50% { text-shadow: 0 0 35px gold; }
+    }
 
-body::before,
-body::after {
-    content: "";
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #FFF200, transparent);
-    opacity: 0.5;
-    z-index: -17;
-    animation: beamMove 3s linear infinite;
-}
-body::before { top: 25%; animation-duration: 2.5s; }
-body::after { top: 70%; animation-duration: 4s; }
+    #logoutButton {
+      position: absolute;
+      right: 20px;
+      background-color: yellow;
+      color: black;
+      border: none;
+      padding: 8px 15px;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+    }
 
-.glitter-container {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 50;
-}
+    #logoutButton:hover {
+      box-shadow: 0 0 15px gold;
+      background-color: gold;
+    }
 
-.glitter {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: radial-gradient(circle, #FFF, #FFD500, transparent);
-    border-radius: 50%;
-    filter: blur(1.5px);
-    animation: glitterFloat linear infinite, glitterBlink ease-in-out infinite;
-}
+    #main {
+      display: flex;
+      height: calc(100vh - 80px);
+    }
 
-@keyframes glitterFloat {
-    from { transform: translateY(110vh) translateX(0px); }
-    to   { transform: translateY(-10vh) translateX(40px); }
-}
+    #navbar {
+      width: 240px;
+      background-color: rgba(0,0,0,0.85);
+      border-right: 2px solid yellow;
+      text-align: center;
+      padding-top: 25px;
+      box-shadow: 4px 0 14px rgba(255,255,0,0.4);
+    }
 
-@keyframes glitterBlink {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.3; }
-    70% { opacity: 1; }
-}
+    #navhead {
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px yellow;
+    }
 
-#headsection {
-    width: 100%;
-    text-align: center;
-    padding: 25px 0;
-    position: fixed;
-    top: 0;
-    background: rgba(0,0,0,0.75);
-    border-bottom: 3px solid #FFD500;
-    box-shadow: 0 0 40px #FFD500, 0 0 80px #FFF200 inset;
-    z-index: 200;
-    animation: headerPulse 5s infinite ease-in-out;
-}
+    .link {
+      display: block;
+      background-color: yellow;
+      color: black;
+      margin: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+      transition: 0.25s ease;
+    }
 
-@keyframes headerPulse {
-    0%,100% { box-shadow: 0 0 40px #FFD500; }
-    50% { box-shadow: 0 0 80px #FFF200; }
-}
+    .link:hover {
+      background-color: gold;
+      transform: scale(1.07);
+      box-shadow: 0 0 15px gold;
+    }
 
-#header {
-    font-size: 50px;
-    margin: 0;
-    color: #FFF200;
-    text-shadow:
-        0 0 20px #FFF200,
-        0 0 60px #FFD500,
-        0 0 120px #FFF200;
-    animation: flicker 3s infinite;
-}
+    #content {
+      flex: 1;
+      padding: 40px;
+      animation: fadeIn 1s ease;
+    }
 
-@keyframes flicker {
-    92% { opacity: 1; }
-    94% { opacity: 0.4; }
-    96% { opacity: 1; }
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-#logoutButton {
-    position: absolute;
-    right: 30px;
-    top: 18px;
-    padding: 12px 20px;
-    background: #FFF200;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    color: black;
-    font-size: 18px;
-    box-shadow: 0 0 30px #FFF200;
-    transition: 0.2s ease;
-}
-#logoutButton:hover {
-    transform: scale(1.12);
-    background: #FFD500;
-    box-shadow: 0 0 40px #FFD500, 0 0 70px #FFF200;
-}
+    h1 {
+      font-size: 48px;
+      margin-top: 0;
+      border-bottom: 3px solid yellow;
+      padding-bottom: 12px;
+      text-shadow: 0 0 12px yellow;
+    }
 
-#layout {
-    display: flex;
-    margin-top: 160px;
-}
+    .contact-box {
+      background-color: rgba(0,0,0,0.7);
+      border: 2px solid yellow;
+      border-radius: 20px;
+      padding: 30px;
+      width: 480px;
+      margin-top: 40px;
+      box-shadow: 0 0 25px rgba(255,255,0,0.4);
+      animation: floatForm 4s ease-in-out infinite alternate;
+    }
 
-#sidebar {
-    width: 260px;
-    padding: 30px;
-    background: rgba(0,0,0,0.7);
-    border-right: 3px solid #FFD500;
-    box-shadow: 0 0 40px #FFD500, inset 0 0 40px rgba(255,200,0,0.35);
-    animation: panelGlow 6s infinite ease-in-out;
-}
+    @keyframes floatForm {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
 
-@keyframes panelGlow {
-    0%,100% { box-shadow: 0 0 40px #FFD500; }
-    50%     { box-shadow: 0 0 80px #FFF200; }
-}
+    input, textarea {
+      width: 90%;
+      background-color: black;
+      color: yellow;
+      border: none;
+      margin: 12px 0;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(255,255,0,0.3);
+    }
 
-#sidebar h2 {
-    font-size: 28px;
-    color: #FFF200;
-    text-shadow: 0 0 25px #FFD500, 0 0 50px #FFF200;
-}
+    input:focus, textarea:focus {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px gold;
+    }
 
-.nav-item {
-    display: block;
-    padding: 12px;
-    margin: 20px 0;
-    text-align: center;
-    border: 2px solid #FFF200;
-    border-radius: 10px;
-    background: #000;
-    color: #FFF200;
-    box-shadow: 0 0 20px #FFD500;
-    position: relative;
-    overflow: hidden;
-    transition: 0.25s ease;
-}
+    textarea {
+      resize: none;
+      height: 120px;
+    }
 
-.nav-item:hover {
-    background: #FFF200;
-    color: #000;
-    transform: scale(1.1);
-    box-shadow: 0 0 50px #FFF200, 0 0 90px #FFD500;
-}
+    #sendButton {
+      background-color: yellow;
+      color: black;
+      width: 92%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 18px yellow;
+    }
 
-#content {
-    text-align: center;
-    flex-grow: 1;
-    padding: 50px;
-}
+    #sendButton:hover {
+      background-color: gold;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px gold;
+    }
+  </style>
+</head>
 
-.category {
-    font-size: 48px;
-    margin: 40px 0;
-    cursor: pointer;
-    position: relative;
-    text-shadow: 
-        0 0 25px #FFF200,
-        0 0 60px #FFD500,
-        0 0 120px #FFF200;
-    animation: float 3s infinite ease-in-out alternate, flicker 5s infinite;
-}
+<body>
 
-@keyframes float {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-10px); }
-}
+  <div class="grid-bg"></div>
+  <div class="glow-orb orb1"></div>
+  <div class="glow-orb orb2"></div>
 
-.category::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,245,180,0.7), transparent);
-    animation: shine 3s infinite;
-}
+  <div id="headsection">
+    <form action="logout">
+      <input id="logoutButton" type="submit" value="Logout">
+    </form>
+    <h1 id="header">Mockbuster</h1>
+  </div>
 
-@keyframes shine {
-    0% { left: -120%; }
-    100% { left: 120%; }
-}
+  <div id="main">
 
-.category:hover {
-    transform: scale(1.2);
-    text-shadow:
-        0 0 40px #FFF200,
-        0 0 90px #FFD500,
-        0 0 150px #FFF200;
-}
+    <div id="navbar">
+      <h2 id="navhead">Navigation</h2>
+      <a class="link" href="/">Home</a>
+      <a class="link" href="/about">About</a>
+      <a class="link" href="/my-movies">My Movies</a>
+      <a class="link" href="/contact">Contact</a>
+    </div>
 
-    </style>
+    <div id="content">
+      <h1>Contact Us</h1>
+      <p>If you have any questions, feedback, or movie suggestions, feel free to contact us!</p>
+
+      <div class="contact-box">
+        <form action="send-message" method="POST">
+
+          <input type="text" name="name" placeholder="Your Name" required>
+
+          <input type="email" name="email" placeholder="Your Email" required>
+
+          <textarea name="message" placeholder="Your Message..." required></textarea>
+
+          <button id="sendButton" type="submit">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
