@@ -102,6 +102,14 @@
             height: 85%;
             width: 10%;
         }
+        .cover_form{
+            display:inline;
+            width: 10%;
+            height: 85%;
+        }
+        .genreHead{
+            text-align: left;
+        }
 
     </style>
     <body>
@@ -120,20 +128,20 @@
             <a class = "link" href="#">Contact</a>
         </div>
         <div id="content">
-            <div class="genreSection">
+            <!-- <div class="genreSection">
                 <div class="genreHead" style="text-align: left;">
                     <h1>My List</h1>
                 </div>
                 <img class="cover" src="./images/kill_bill1.png">
                 <img class="cover" src="./images//sinners.png">
-            </div>
+            </div> -->
 
             <div class="genreSection">
                 <div class="genreHead" style="text-align: left;">
                     <h1>Action</h1>
                 </div>
 
-                <form class="cover_form" action="/rent-movie" method="get">
+                <!-- <form class="cover_form" action="/rent-movie" method="get">
                     <input type="image" type="submit" class="cover" src="./images/kill_bill1.png">
                 </form>
                 <img class="cover" src="./images/kill_bill1.png">
@@ -145,7 +153,7 @@
                 <img class="cover" src="./images/john-wick.jpg">
                 <img class="cover" src="./images/mission-impossible.jpg">
                 <img class="cover" src="./images/black-panther.jpg">
-                <img class="cover" src="./images/the-fall-guy.jpg">
+                <img class="cover" src="./images/the-fall-guy.jpg"> -->
             </div>
 
             <div class="genreSection">
@@ -153,7 +161,7 @@
                     <h1>Horror</h1>
                 </div>
 
-                <img class="cover" src="./images/sinners.png">
+                <!-- <img class="cover" src="./images/sinners.png">
                 <img class="cover" src="./images/get_out.jpg">
                 <img class="cover" src="./images/hereditary.png">
                 <img class="cover" src="./images/scream.jpg">
@@ -162,10 +170,77 @@
                 <img class="cover" src="./images/nightmare_on_elm_st.jpg">
                 <img class="cover" src="./images/candyman.jpg">
                 <img class="cover" src="./images/silence_of_the_lambs.jpg">
-                <img class="cover" src="./images/us.png">
-                
+                <img class="cover" src="./images/us.png"> -->
+            </div>
+
+            <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>Romance</h1>
+                </div>
+
+                <!-- <form class="cover_form" action="/rent-movie" method="get">
+                    <input type="image" alt="submit" class="cover" src="./images/kill_bill1.png">
+                </form> -->
+
             </div>
         </div>
         
     </body>
+    <script>
+        async function loadMovies() {
+        try {
+            const response = await fetch("/movies"); // fetch from server
+            const data = await response.json();      // parse json
+
+            console.log(data);
+
+            var sections = document.getElementsByClassName("genreSection")
+            console.log(sections)
+
+            var actionGenreSection = sections[0]
+            fillMovies(data.action, actionGenreSection)
+
+            var horrorSection = sections[1]
+            fillMovies(data.horror, horrorSection)
+
+            var romanticSection = sections[2]
+            fillMovies(data.romantic, romanticSection)
+
+            
+            
+            
+
+            console.log(data); // now you have access to all movies
+
+            // Example: show the first horror movie title
+            // document.getElementById("test").textContent = data.horror[0].title;
+
+        } catch (err) {
+            console.error("Error loading movies:", err);
+        }
+    }
+
+    function fillMovies(array, genreSection){
+        for(var i = 0; i<array.length; i++){
+            var coverForm = document.createElement("form")
+            coverForm.setAttribute("class", "cover_form")
+            coverForm.setAttribute("action", "/rent-movie")
+            coverForm.setAttribute("method", "get")
+
+            var input = document.createElement("input")
+            input.setAttribute("type", "image")
+            input.setAttribute("alt", "submit")
+            input.setAttribute("class", "cover")
+            input.setAttribute("src", array[i].cover)
+            input.value = JSON.stringify(array[i])
+            coverForm.appendChild(input)
+            genreSection.appendChild(coverForm)
+        }
+        
+        
+    }
+
+
+    loadMovies();
+    </script>
 </html>
