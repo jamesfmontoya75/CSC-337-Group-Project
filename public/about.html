@@ -1,74 +1,161 @@
 <!DOCTYPE html>
-<style>
-    html{
-        height: 100%;
-    }
-    body{
-        height: 102%;
-        background-color: lightblue;
-        padding: 0px;
-        margin: 0px;
-        position: relative;
-        top: -30px;
-    }
-    #navbar{
-        text-align: center;
-        width: 15%;
-        height: 90%;
-        background-color: green;
-        float: left;
-        }
-    #content{
-        text-align: center;
-        height: 90%;
-        background-color: lightcoral;
-        width: 85%;
-        float: left;
-    }
-    .link{
-        font-size: 50px;
-        display: block;
-    }
-    #navhead{
-        font-size: 40px;
-    }
-    #headsection{
-            height: 10%;
-            font-size: 20px;
-            background-color: red;
-            text-align: center;
-            position: relative;
-            width: 100%;
-        }
-    #header{
-            text-align: center;
-            position:relative;
-            top: 25%;
-        }
-    #logoutButton{
-            text-align: right;
-            position:absolute;
-            right: 0%;
-        }  
-</style>
 <html>
-    <body style="background-color: lightblue;">
-        <div id="headsection">
-            <form action="logout">
-                <input id="logoutButton" type="submit" value="Logout">
-            </form>
-            <h1 id= "header">Mockbuster</h1>
-        </div>
+<head>
+  <title>About - Mockbuster</title>
 
-        <div id="navbar">
-            <header id="navhead">Navigation</header>
-            <a class = "link" href="/home">Home</a>
-            <a class = "link" href="#">Portfolio</a>
-            <a class = "link" href="#">Contact</a>
-        </div>
-        <div id="content">
-            <h1 style="font-size: 50px;">About me</h1>
-            <p>At Mockbuster, you can easily rent from a wide selection of movies.</p>
-        </div>
-    </body>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      background-color: black;
+      padding: 0;
+      margin: 0;
+      font-family: "Courier New", monospace;
+      color: yellow;
+    }
+
+  
+    #headsection {
+      height: 80px;
+      background-color: black;
+      border-bottom: 2px solid yellow;
+      position: relative;
+      text-align: center;
+    }
+
+    #header {
+      color: yellow;
+      font-size: 36px;
+      line-height: 80px;
+      margin: 0;
+    }
+
+    #logoutButton {
+      position: absolute;
+      right: 15px;
+      top: 25px;
+      background-color: yellow;
+      color: black;
+      border: none;
+      padding: 6px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #navbar {
+      width: 15%;
+      height: calc(100vh - 80px);
+      background-color: black;
+      border-right: 2px solid yellow;
+      float: left;
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    #navhead {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .link {
+      font-size: 22px;
+      display: block;
+      color: black;
+      background-color: yellow;
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .link:hover {
+      background-color: gold;
+    }
+
+  
+    #content {
+    width: 85%;
+    float: left;
+    padding: 40px;
+    box-sizing: border-box;
+    }
+
+
+    #content h1 {
+      font-size: 48px;
+      border-bottom: 3px solid yellow;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    #content p {
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 800px;
+    }
+
+   
+    #team {
+      margin-top: 40px;
+    }
+
+    .team-card {
+      display: inline-block;
+      background-color: yellow;
+      color: black;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 10px yellow;
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <div id="headsection">
+    <form action="logout">
+      <input id="logoutButton" type="submit" value="Logout">
+    </form>
+    <h1 id="header">Mockbuster</h1>
+  </div>
+
+  
+  <div id="navbar">
+    <header id="navhead">Navigation</header>
+    <a class="link" href="/home">Home</a>
+    <a class="link" href="#">Portfolio</a>
+    <a class="link" href="#">Contact</a>
+  </div>
+
+  <div id="content">
+    <h1>About Us</h1>
+
+    <p>
+      Mockbuster is a movie browsing and rental-style web application created as part of our CSC 337 course project.
+      Our goal is to allow users to explore movies by genre in a fun and simple way inspired by classic video rental stores.
+    </p>
+
+    <p>
+      Users can browse action and horror movies, manage their lists, and experience a clean, retro-style movie interface.
+    </p>
+
+    <div id="team">
+      <h2>Our Team</h2>
+
+      <div class="team-card">Sachi</div>
+      <div class="team-card">Monica</div>
+      <div class="team-card">James</div>
+      <div class="team-card">Adam</div>
+    </div>
+  </div>
+
+</body>
 </html>
