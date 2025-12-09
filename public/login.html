@@ -6,163 +6,346 @@
     <link rel="stylesheet" href="./styles/general.css"/>
 
     <style>
-        
-        .grid-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background:
-                linear-gradient(rgba(255,255,0,0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,0,0.15) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 10s linear infinite;
-            z-index: -2;
+        :root {
+            --yellow: #ffe900;
+            --gold: #ffd447;
+            --pink: #ff4fbc;
+            --cyan: #4fe8ff;
+            --purple: #b37aff;
+            --white: #fff8d6;
         }
 
-        @keyframes moveGrid {
-            from { background-position: 0 0; }
-            to { background-position: 50px 50px; }
-        }
+        * { box-sizing: border-box; }
 
-      
-        .glow {
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,0,0.4), transparent);
-            filter: blur(80px);
-            animation: floatGlow 6s ease-in-out infinite alternate;
-            z-index: -1;
-        }
-
-        .glow.a { top: 10%; left: 15%; }
-        .glow.b { bottom: 10%; right: 15%; animation-delay: 1.5s; }
-
-        @keyframes floatGlow {
-            from { transform: translateY(0); opacity: 0.7; }
-            to { transform: translateY(-40px); opacity: 1; }
-        }
-
-        #inputsection {
+        body {
+            margin: 0;
+            font-family: system-ui, sans-serif;
+            background: radial-gradient(circle at center,
+                        #2d1f63 0%,
+                        #130b27 50%,
+                        #000 100%);
+            color: var(--white);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 85vh;
-            animation: fadeIn 1.2s ease;
+            overflow: hidden;
+            min-height: 100vh;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .beam {
+            position: fixed;
+            width: 120vw;
+            height: 120vh;
+            background: conic-gradient(
+                from 0deg,
+                rgba(255,233,0,0.25),
+                rgba(255,79,188,0.22),
+                rgba(79,232,255,0.22),
+                rgba(255,233,0,0.25)
+            );
+            filter: blur(180px);
+            animation: rotateBeam 18s linear infinite;
+            z-index: -4;
+            opacity: 0.35;
+        }
+
+        @keyframes rotateBeam {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ✨ Bright floating glows */
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            filter: blur(75px);
+            mix-blend-mode: screen;
+            z-index: -3;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+
+        .glow.a { top: -10%; left: -8%; background: rgba(255,233,0,0.75); }
+        .glow.b { bottom: -10%; right: -10%; background: rgba(111,84,255,0.8); animation-delay: 3s; }
+
+        @keyframes floatGlow {
+            from { transform: translate3d(0,0,0) scale(1); }
+            to { transform: translate3d(60px,-40px,0) scale(1.15); }
+        }
+
+        /* ✨ Sparkle particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -2;
+        }
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, var(--gold), transparent);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: sparkleMove 9s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes sparkleMove {
+            from { transform: translateY(110vh) translateX(-20px); }
+            to { transform: translateY(-10vh) translateX(20px); }
         }
 
         #header {
-            font-size: 70px;
-            text-shadow: 0 0 20px yellow, 0 0 40px gold;
-            animation: titlePulse 3s infinite ease-in-out;
-            margin-bottom: 20px;
+            margin-top: 40px;
+            font-size: clamp(52px, 7vw, 82px);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: linear-gradient(90deg,
+                        var(--gold),
+                        var(--yellow),
+                        var(--pink),
+                        var(--cyan),
+                        var(--purple));
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 45px rgba(255,233,0,0.9);
+            animation: headerShine 4s ease-in-out infinite;
         }
 
-        @keyframes titlePulse {
-            0%,100% { text-shadow: 0 0 20px yellow; }
-            50% { text-shadow: 0 0 45px gold; }
+        @keyframes headerShine {
+            0%,100% { filter: drop-shadow(0 0 40px var(--gold)); }
+            50%     { filter: drop-shadow(0 0 70px var(--cyan)); }
         }
 
-        
+        .tagline {
+            margin-top: -12px;
+            text-align: center;
+            letter-spacing: 0.22em;
+            font-size: 15px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+       
+        #inputsection {
+            margin-top: 30px;
+            animation: fadeUp 1.3s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         form {
-            padding: 25px;
-            width: 350px;
-            border-radius: 18px;
-            background: rgba(255,255,0,0.08);
-            box-shadow: 0 0 20px rgba(255,255,0,0.4);
-            backdrop-filter: blur(6px);
-            animation: floatBox 4s infinite ease-in-out alternate;
+            position: relative;
+            padding: 34px;
+            width: 400px;
+            border-radius: 28px;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(22px);
+            border: 2px solid rgba(255,233,0,0.55);
+            box-shadow:
+                0 0 60px rgba(255,233,0,0.35),
+                0 0 140px rgba(111,84,255,0.35),
+                inset 0 0 30px rgba(255,255,255,0.15);
+            overflow: hidden;
         }
 
-        @keyframes floatBox {
-            from { transform: translateY(0); }
-            to { transform: translateY(-6px); }
+        form::before {
+            content: "";
+            position: absolute;
+            inset: -35%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0%,
+                rgba(255,233,0,0.3) 12%,
+                rgba(255,79,188,0.25) 35%,
+                rgba(79,232,255,0.25) 60%,
+                rgba(255,233,0,0.3) 85%,
+                transparent 100%
+            );
+            animation: ringSpin 5s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes ringSpin {
+            100% { transform: rotate(360deg); }
+        }
+
+        form::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border-radius: 24px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            z-index: -1;
         }
 
         #login-title {
             font-size: 28px;
-            text-shadow: 0 0 10px gold;
-            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
         }
 
-        
+        #login-title .icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--gold), var(--yellow));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 0 25px var(--gold);
+        }
+
+        .field-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            font-size: 13px;
+            letter-spacing: 0.11em;
+            opacity: 0.9;
+            margin-left: 6px;
+        }
+
         input {
-            margin: 8px 0;
-            width: 90%;
-            font-size: 20px;
-            border-radius: 25px;
-            padding: 12px 10px;
-            text-align: center;
-            border: 2px solid yellow;
-            background: black;
-            color: yellow;
-            box-shadow: 0 0 12px rgba(255,255,0,0.4);
+            width: 100%;
+            padding: 13px 14px 13px 45px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,233,0,0.55);
+            background: rgba(0,0,0,0.85);
+            color: var(--white);
+            font-size: 17px;
+            transition: 0.25s ease;
         }
 
         input:focus {
-            border-color: gold;
-            box-shadow: 0 0 18px gold;
+            border-color: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan);
             transform: scale(1.05);
         }
 
+        .field-icon {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            opacity: 0.85;
+        }
+
         #submitButton {
-            width: 95%;
-            font-size: 22px;
-            padding: 12px;
-            border-radius: 25px;
-            margin-top: 12px;
-            background: yellow;
-            color: black;
-            box-shadow: 0 0 15px yellow;
-            transition: 0.3s ease;
+            width: 100%;
+            padding: 15px;
+            border-radius: 999px;
+            border: none;
+            font-weight: 700;
+            font-size: 19px;
+            cursor: pointer;
+            background: linear-gradient(110deg,
+                        var(--gold),
+                        var(--yellow),
+                        var(--pink),
+                        var(--cyan),
+                        var(--purple),
+                        var(--gold));
+            background-size: 400%;
+            animation: btnGlow 6s ease infinite;
+            color: #000;
+            box-shadow: 0 0 35px var(--gold), 0 0 80px var(--cyan);
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes btnGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         #submitButton:hover {
-            background: gold;
-            transform: scale(1.08);
-            box-shadow: 0 0 25px gold, 0 0 40px yellow;
+            transform: scale(1.07);
+            box-shadow: 0 0 60px var(--gold), 0 0 120px var(--cyan);
         }
 
-    
-        a {
-            margin-top: 12px;
-            font-size: 18px;
+        .auth-footer {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            opacity: 0.9;
         }
 
-        a:hover {
-            text-shadow: 0 0 12px gold;
+        .auth-footer a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: 0.2s ease;
         }
 
+        .auth-footer a:hover {
+            text-shadow: 0 0 10px var(--cyan);
+        }
     </style>
-
 </head>
 
 <body>
 
-    <div class="grid-bg"></div>
+    <div class="beam"></div>
     <div class="glow a"></div>
     <div class="glow b"></div>
 
-    <h1 id="header" style="text-align: center;">Welcome to Mockbuster!</h1>
+    <div class="particles"></div>
+
+    <script>
+        for (let i = 0; i < 26; i++) {
+            let s = document.createElement("div");
+            s.className = "spark";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.animationDelay = Math.random() * 12 + "s";
+            document.querySelector(".particles").appendChild(s);
+        }
+    </script>
+
+    <h1 id="header">Mockbuster</h1>
+    <p class="tagline">Blockbuster Vibes • Magical UI</p>
 
     <div id="inputsection">
         <form method="POST" action="login-action">
-            <h2 id="login-title">Login</h2>
+            <h2 id="login-title"><span class="icon">★</span> Login</h2>
 
-            <input id="usernameinput" type="text" placeholder="Username" name="username" required>
-            <br>
-            <input id="passwordinput" type="password" placeholder="Password" name="password" required>
-            <br>
-            <button id="submitButton" type="submit">Login</button>
+            <div class="field-group">
+                <label for="usernameinput">Username</label>
+                <span class="field-icon">👤</span>
+                <input id="usernameinput" type="text" placeholder="Enter your username" name="username" required>
+            </div>
+
+            <div class="field-group">
+                <label for="passwordinput">Password</label>
+                <span class="field-icon">🔒</span>
+                <input id="passwordinput" type="password" placeholder="Enter your password" name="password" required>
+            </div>
+
+            <button id="submitButton" type="submit">Enter the Magic</button>
+
+            <div class="auth-footer">
+                <span><input type="checkbox"> Remember me</span>
+                <a href="/forgot-password">Forgot password?</a>
+            </div>
+
+            <div class="auth-footer" style="justify-content: center; margin-top: 10px; gap: 6px;">
+                <span>New here?</span>
+                <a href="/register">Create an account</a>
+            </div>
         </form>
-
-        <a href="/register">Register</a>
     </div>
 
 </body>
