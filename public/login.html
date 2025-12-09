@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="./styles/general.css"/>
     <style>
         body{
-            background-color: lightblue;
             margin: 0px;
         }
         #header{
             font-size: 75px;
-            background-color: lightcoral;
+        }
+
+        #inputsection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
         #usernameinput{
             text-align: center;
-            position:absolute;
-            right: 35%;
-            left: 35%;
         }
         #passwordinput{
             text-align: center;
-            position:absolute;
-            right: 35%;
-            left: 35%;
+            
         }
         #submituserinfo{
             text-align: center;
-            position:absolute;
-            right: 46%;
-            left: 46%;
+           
+        }
+
+        #usernameinput, #passwordinput, #submituserinfo {
+            text-align: center;
+            margin: 5px 0px;
+            font-size: x-large;
+            padding: 10px;
+            background-color: black;
+            color: yellow;
+            border: none;
+            border-radius: 25px;
+        }
+
+        a {
+            margin-top: 5px;
+        }
+
+        #login-title {
+            color: black;
+            text-align: center;
+            font-size: x-large;
         }
     </style>
     <body>
@@ -33,13 +53,16 @@
         <h1 id= "header" style="text-align: center;">Welcome to Mockbuster!</h1>
         <div id="inputsection">
             <form method ="POST" action="login-action">
+                <h2 id="login-title">Login</h2>
                 <input id="usernameinput" type="text" placeholder="Username" name="username">
                 <br>
-                <input id="passwordinput" type="text" placeholder="Password" name="password">
+                <input id="passwordinput" type="password" placeholder="Password" name="password">
                 <br><br>
-                <input id="submituserinfo" type="submit">
+                <button id="submitButton" type="submit">Login</button>
             </form>
-            
+  
+            <a href="/register">Register</a>
+     
         </div>
     </body>
 </html>

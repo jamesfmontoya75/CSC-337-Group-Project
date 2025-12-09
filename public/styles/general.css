@@ -1,0 +1,46 @@
+body {
+    background-color: black;
+    color: yellow;
+    font-family: 'Courier New', monospace;
+}
+
+a {
+    color: yellow;
+}
+
+button {
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    background-color: yellow;
+    font-family: 'Courier New', monospace;
+    padding: 5px;
+}
+
+button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+input::placeholder { 
+    color: yellow; 
+    opacity: 0.5;
+}
+
+
+form {
+    padding: 20px;
+    background-color: yellow;
+    border-radius: 10px;
+}
+
+#submitButton {
+    font-size: 23px;
+    border: none;
+    border-radius: 5px;
+    color: yellow;
+    background-color: black;
+    font-family: 'Courier New', monospace;
+    padding: 10px;
+}
