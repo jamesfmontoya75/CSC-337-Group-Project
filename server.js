@@ -289,6 +289,10 @@ app.post("/rent-movie", (req, res) => {
     }
 });
 
+app.get("/rate-movie", (req, res)=>{
+  
+})
+
 
 
 // Start server
