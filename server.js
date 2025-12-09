@@ -97,6 +97,15 @@ app.get("/logout", (req, res) => {
   });
 });
 
+// movie info
+
+// Route to send JSON file
+app.get("/movies", (req, res) => {
+  res.sendFile(__dirname + "/movies.json");
+});
+
+
+
 app.listen(8080, () => {
   console.log("Server Running");
 });
