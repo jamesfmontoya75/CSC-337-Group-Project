@@ -256,39 +256,35 @@ body::after { top: 70%; animation-duration: 4s; }
         0 0 150px #FFF200;
 }
 
-</style>
-</head>
+    </style>
+    <body>
+        <title>Home</title>
+        <div id="headsection">
+           <form action="/logout" method="get">
+                <button id="logoutButton" type="submit">Logout</button>
+            </form>
+            <h1 id= "header">Mockbuster</h1>
+        </div>
+        
+        <div id="navbar">
+            <h2 id="navhead">Navigation</h2>
+            <a class = "link" href="/about">About</a>
+            <a class = "link" href="#">Portfolio</a>
+            <a class = "link" href="#">Contact</a>
+        </div>
+        <div id="content">
+            <!-- <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>My List</h1>
+                </div>
+                <img class="cover" src="./images/kill_bill1.png">
+                <img class="cover" src="./images//sinners.png">
+            </div> -->
 
-<body>
-
-<h1 style="
-    width: 100%;
-    text-align: center;
-    font-size: 70px;
-    margin: 20px 0 0 0;
-    color: #FFF200;
-    font-family: 'Courier New', monospace;
-    text-shadow:
-        0 0 30px #FFF200,
-        0 0 80px #FFD500,
-        0 0 150px #FFF200;
-    position: relative;
-    z-index: 9999;
-">
-    Mockbuster
-</h1>
-
-
-<div class="fog"></div>
-
-
-<div class="glitter-container"></div>
-
-
-<div id="headsection">
-    
-    <button id="logoutButton">Logout</button>
-</div>
+            <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>Action</h1>
+                </div>
 
 <div id="layout">
 
@@ -306,19 +302,76 @@ body::after { top: 70%; animation-duration: 4s; }
         <div class="category">Romance</div>
     </div>
 
-</div>
+                <!-- <form class="cover_form" action="/rent-movie" method="get">
+                    <input type="image" alt="submit" class="cover" src="./images/kill_bill1.png">
+                </form> -->
 
-<script>
-const glitterContainer = document.querySelector('.glitter-container');
-for (let i = 0; i < 55; i++) {
-    const g = document.createElement('div');
-    g.classList.add('glitter');
-    g.style.left = Math.random() * 100 + "vw";
-    g.style.animationDuration = (5 + Math.random() * 10) + "s";
-    g.style.animationDelay = Math.random() * 12 + "s";
-    glitterContainer.appendChild(g);
-}
-</script>
+            </div>
+        </div>
+        
+    </body>
+    <script>
+        async function loadMovies() {
+        try {
+            const response = await fetch("/movies"); // fetch from server
+            const data = await response.json();      // parse json
 
-</body>
+            console.log(data);
+
+            var sections = document.getElementsByClassName("genreSection")
+            console.log(sections)
+
+            var actionGenreSection = sections[0]
+            fillMovies(data.action, actionGenreSection)
+
+            var horrorSection = sections[1]
+            fillMovies(data.horror, horrorSection)
+
+            var romanticSection = sections[2]
+            fillMovies(data.romantic, romanticSection)
+
+            
+            
+            
+
+            console.log(data); // now you have access to all movies
+
+            // Example: show the first horror movie title
+            // document.getElementById("test").textContent = data.horror[0].title;
+
+        } catch (err) {
+            console.error("Error loading movies:", err);
+        }
+    }
+
+    function fillMovies(array, genreSection){
+        for(var i = 0; i<array.length; i++){
+            var coverForm = document.createElement("form")
+            coverForm.setAttribute("class", "cover_form")
+            coverForm.setAttribute("action", "/rent-movie")
+            coverForm.setAttribute("method", "post")
+
+            // Hidden input to send the movie id
+            var hiddenInput = document.createElement("input")
+            hiddenInput.setAttribute("type", "hidden")
+            hiddenInput.setAttribute("name", "movieId")
+            hiddenInput.value = array[i].id
+            coverForm.appendChild(hiddenInput)
+
+            // Image button for submit
+            var input = document.createElement("input")
+            input.setAttribute("type", "image")
+            input.setAttribute("alt", "submit")
+            input.setAttribute("class", "cover")
+            input.setAttribute("src", array[i].cover)
+            coverForm.appendChild(input)
+
+            genreSection.appendChild(coverForm)
+        }
+    }
+
+
+
+    loadMovies();
+    </script>
 </html>

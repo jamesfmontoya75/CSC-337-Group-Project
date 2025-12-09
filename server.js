@@ -261,7 +261,7 @@ app.get("/movie/:id", requireLogin, (req, res) => {
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
             <a class="link" href="/about">About</a>
-            <a class="link" href="#">Portfolio</a>
+            <a class="link" href="/my-movies">My Movies</a>
             <a class="link" href="#">Contact</a>
         </div>
 
@@ -296,6 +296,7 @@ app.post("/rent-movie", requireLogin, async (req, res) => {
 
     console.log("User renting:", user.username, "Movie:", movieId);
 
+
     await db.collection("users").updateOne(
       { username: user.username },
       {
@@ -303,8 +304,13 @@ app.post("/rent-movie", requireLogin, async (req, res) => {
       }
     );
 
-    // update session user object too
-    user.rentedMovies.push(movieId);
+    if(user.rentedMovies.includes(movieId)){
+      console.log("You already rented this movie.")
+    }else{
+      // update session user object too
+      user.rentedMovies.push(movieId);
+    }
+    
 
     res.redirect("/movie/" + movieId);
   } catch (err) {
@@ -312,6 +318,29 @@ app.post("/rent-movie", requireLogin, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+app.get("/rate-movie", (req, res)=>{
+  
+})
+
+app.get("/my-movies", async (req, res)=>{
+  const user = req.session.user;
+
+  if (!user) {
+    return res.send(`
+      <h1>Error 404: no such user found, please try again.</h1>
+      <a href="/login">Login</a>
+    `);
+  }
+  // console.log(user)
+  res.sendFile(path.join(__dirname, "public/my-movies.html"));
+  
+})
+
+app.get("/get-user", (req, res)=>{
+  res.type("application/json");
+  res.send(req.session.user);
+})
 
 // =======================
 // START SERVER

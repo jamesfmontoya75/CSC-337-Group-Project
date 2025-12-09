@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="./styles/general.css"/>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            height: 102%;
+            padding: 0px;
+            margin: 0px;
+            position: relative;
+            top: -30px;
+            
+        }
+
+        #headsection {
+            height: 55px;                /* fixed height for consistency */
+            width: 100%;
+            font-size: 22px;
+            text-align: center;
+            background: black;
+            color: yellow;
+            border-bottom: 2px solid yellow;
+            display: flex;
+            align-items: center;         /* vertical centering */
+            justify-content: center;     /* horizontal centering */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding: 5px;
+        }
+
+
+
+
+        #logoutButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+
+        #content{
+            text-align: center;
+            margin: 125px 0px 0px 225px;
+        }
+
+        #navbar {
+            position: fixed;
+            top: 55px;                   /* matches header height */
+            left: 0;
+            width: 200px;                /* clean, consistent width */
+            height: calc(100vh - 55px); /* fill page below header */
+
+            background: black;
+            border-right: 1px solid yellow;
+
+            display: flex;
+            flex-direction: column;
+            gap: 15px;                   /* spacing between links */
+            
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+
+        #navbar .link {
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 0;
+            background-color: yellow;
+            padding: 2.5px;
+            font-weight: 600;
+        }
+
+        #navbar .link:hover {
+            opacity: 0.6;
+        }
+
+        form {
+            background-color: black;
+        }
+
+        .link{
+            font-size: x-large;
+            display: block;
+        }
+        #navhead{
+            font-size: x-large;
+            font-weight: 600;
+        }
+
+        .genreSection {
+            text-align: left;
+        }
+
+        .cover{
+            height: 85%;
+            width: 10%;
+        }
+        .cover_form{
+            display:inline;
+            width: 10%;
+            height: 85%;
+        }
+        .genreHead{
+            text-align: left;
+        }
+
+    </style>
+    <body>
+        <title>Home</title>
+        <div id="headsection">
+           <form action="/logout" method="get">
+                <button id="logoutButton" type="submit">Logout</button>
+            </form>
+            <h1 id= "header">Mockbuster</h1>
+        </div>
+        
+        <div id="navbar">
+            <h2 id="navhead">Navigation</h2>
+            <a class = "link" href="/about">About</a>
+            <a class = "link" href="/my-movies">My Movies</a>
+            <a class = "link" href="#">Contact</a>
+        </div>
+        <div id="content">
+            <div id="content">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>My Movies</h1>
+                </div>
+            <!-- <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>My List</h1>
+                </div>
+                <img class="cover" src="./images/kill_bill1.png">
+                <img class="cover" src="./images//sinners.png">
+            </div> -->
+
+            <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>Action</h1>
+                </div>
+
+                <!-- <form class="cover_form" action="/rent-movie" method="get">
+                    <input type="image" type="submit" class="cover" src="./images/kill_bill1.png">
+                </form>
+                <img class="cover" src="./images/kill_bill1.png">
+                <img class="cover" src="./images/infinity-war.jpg">
+                <img class="cover" src="./images/enter-the-dragon.jpg">
+                <img class="cover" src="./images/hunger-games.webp">
+                <img class="cover" src="./images/the-batman.avif">
+                <img class="cover" src="./images/avatar.jpg">
+                <img class="cover" src="./images/john-wick.jpg">
+                <img class="cover" src="./images/mission-impossible.jpg">
+                <img class="cover" src="./images/black-panther.jpg">
+                <img class="cover" src="./images/the-fall-guy.jpg"> -->
+            </div>
+
+            <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>Horror</h1>
+                </div>
+
+                <!-- <img class="cover" src="./images/sinners.png">
+                <img class="cover" src="./images/get_out.jpg">
+                <img class="cover" src="./images/hereditary.png">
+                <img class="cover" src="./images/scream.jpg">
+                <img class="cover" src="./images/halloween.jpg">
+                <img class="cover" src="./images/friday-the-13th.jpg">
+                <img class="cover" src="./images/nightmare_on_elm_st.jpg">
+                <img class="cover" src="./images/candyman.jpg">
+                <img class="cover" src="./images/silence_of_the_lambs.jpg">
+                <img class="cover" src="./images/us.png"> -->
+            </div>
+
+            <div class="genreSection">
+                <div class="genreHead" style="text-align: left;">
+                    <h1>Romance</h1>
+                </div>
+
+                <!-- <form class="cover_form" action="/rent-movie" method="get">
+                    <input type="image" alt="submit" class="cover" src="./images/kill_bill1.png">
+                </form> -->
+
+            </div>
+        </div>
+        
+    </body>
+    <script>
+        async function loadMovies() {
+        try {
+            const response = await fetch("/movies"); // fetch from server
+            const data = await response.json();      // parse json
+            
+            console.log(data);
+
+            const response2 = await fetch("/get-user");
+            const data2 = await response2.json();
+            console.log(response2);
+            const user = data2;
+
+            console.log(user)
+
+            var sections = document.getElementsByClassName("genreSection")
+            console.log(sections)
+
+            var actionGenreSection = sections[0]
+            fillMovies(data.action, actionGenreSection, user)
+
+            var horrorSection = sections[1]
+            fillMovies(data.horror, horrorSection, user)
+
+            var romanticSection = sections[2]
+            fillMovies(data.romantic, romanticSection, user)
+
+            console.log(data); // now you have access to all movies
+
+            // Example: show the first horror movie title
+            // document.getElementById("test").textContent = data.horror[0].title;
+
+        } catch (err) {
+            console.error("Error loading movies:", err);
+        }
+    }
+
+    function fillMovies(array, genreSection, user){
+        for(var j = 0; j<user.rentedMovies.length; j++){
+            for(var i = 0; i<array.length; i++){
+                if(array[i].id == user.rentedMovies[j]){
+                    var coverForm = document.createElement("form")
+                    coverForm.setAttribute("class", "cover_form")
+                    coverForm.setAttribute("action", "/view-movie")
+                    coverForm.setAttribute("method", "post")
+
+                    // Hidden input to send the movie id
+                    var hiddenInput = document.createElement("input")
+                    hiddenInput.setAttribute("type", "hidden")
+                    hiddenInput.setAttribute("name", "movieId")
+                    hiddenInput.value = array[i].id
+                    coverForm.appendChild(hiddenInput)
+
+                    // Image button for submit
+                    var input = document.createElement("input")
+                    input.setAttribute("type", "image")
+                    input.setAttribute("alt", "submit")
+                    input.setAttribute("class", "cover")
+                    input.setAttribute("src", array[i].cover)
+                    coverForm.appendChild(input)
+
+                    genreSection.appendChild(coverForm)
+                }
+            }
+        }
+        
+    }
+
+
+
+    loadMovies();
+    </script>
+</html>
