@@ -105,6 +105,26 @@ app.get("/movie/:title", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "public/movie.html"));
 });
 
+app.post("/rent-movie", (req, res) => {
+    try {
+        // req.body.value comes from the <input name="value">
+        console.log(req.body);
+        const id = req.body.movieId;
+        console.log("id", id);
+        //console.log("Rented movie:", movie);
+
+        // TODO: Handle the rental logic here (save to DB, etc.)
+        
+        //res.send("Movie rented successfully!");
+        res.redirect("/movie/" + id);
+    } catch (err) {
+        console.error("Error processing /rent-movie:", err);
+        res.status(500).send("Server error");
+    }
+});
+
+
+
 // Start server
 app.listen(8080, () => {
   console.log("Server Running on http://localhost:8080");

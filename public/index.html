@@ -225,20 +225,27 @@
             var coverForm = document.createElement("form")
             coverForm.setAttribute("class", "cover_form")
             coverForm.setAttribute("action", "/rent-movie")
-            coverForm.setAttribute("method", "get")
+            coverForm.setAttribute("method", "post")
 
+            // Hidden input to send the movie id
+            var hiddenInput = document.createElement("input")
+            hiddenInput.setAttribute("type", "hidden")
+            hiddenInput.setAttribute("name", "movieId")
+            hiddenInput.value = array[i].id
+            coverForm.appendChild(hiddenInput)
+
+            // Image button for submit
             var input = document.createElement("input")
             input.setAttribute("type", "image")
             input.setAttribute("alt", "submit")
             input.setAttribute("class", "cover")
             input.setAttribute("src", array[i].cover)
-            input.value = JSON.stringify(array[i])
             coverForm.appendChild(input)
+
             genreSection.appendChild(coverForm)
         }
-        
-        
     }
+
 
 
     loadMovies();
