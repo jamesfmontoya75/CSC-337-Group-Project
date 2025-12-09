@@ -2,3 +2,30 @@ action
 1. Kill Bill: Vol 1
     a. Quentin Tarantino
     b. 2003
+2. Avengers: Infinity War
+    a. Anthony Russo
+    b. 2018
+3. Enter the Dragon
+    a. Robert Clouse
+    b. 1973
+4. The Hunger Games
+    a. Gary Ross
+    b. 2012
+5. The Batman
+    a.  Matt Reeves
+    b. 2022
+6. Avatar
+    a. James Cameron
+    b. 2009
+7. John Wick
+    a. Chad Stahelski
+    b. 2014
+8. Mission: Impossible – The Final Reckoning
+    a.  Christopher McQuarrie
+    b. 2025
+9. Black Panther
+    a. Ryan Coogler
+    b. 2018
+10. The Fall Guy
+    a. David Leitch
+    b. 2024
