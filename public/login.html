@@ -1,68 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Mockbuster</title>
     <link rel="stylesheet" href="./styles/general.css"/>
+
     <style>
-        body{
-            margin: 0px;
+        
+        .grid-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(255,255,0,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,0,0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 10s linear infinite;
+            z-index: -2;
         }
-        #header{
-            font-size: 75px;
+
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 50px 50px; }
+        }
+
+      
+        .glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,0,0.4), transparent);
+            filter: blur(80px);
+            animation: floatGlow 6s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        .glow.a { top: 10%; left: 15%; }
+        .glow.b { bottom: 10%; right: 15%; animation-delay: 1.5s; }
+
+        @keyframes floatGlow {
+            from { transform: translateY(0); opacity: 0.7; }
+            to { transform: translateY(-40px); opacity: 1; }
         }
 
         #inputsection {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-        }
-        #usernameinput{
-            text-align: center;
-        }
-        #passwordinput{
-            text-align: center;
-            
-        }
-        #submituserinfo{
-            text-align: center;
-           
+            height: 85vh;
+            animation: fadeIn 1.2s ease;
         }
 
-        #usernameinput, #passwordinput, #submituserinfo {
-            text-align: center;
-            margin: 5px 0px;
-            font-size: x-large;
-            padding: 10px;
-            background-color: black;
-            color: yellow;
-            border: none;
-            border-radius: 25px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        a {
-            margin-top: 5px;
+        #header {
+            font-size: 70px;
+            text-shadow: 0 0 20px yellow, 0 0 40px gold;
+            animation: titlePulse 3s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes titlePulse {
+            0%,100% { text-shadow: 0 0 20px yellow; }
+            50% { text-shadow: 0 0 45px gold; }
+        }
+
+        
+        form {
+            padding: 25px;
+            width: 350px;
+            border-radius: 18px;
+            background: rgba(255,255,0,0.08);
+            box-shadow: 0 0 20px rgba(255,255,0,0.4);
+            backdrop-filter: blur(6px);
+            animation: floatBox 4s infinite ease-in-out alternate;
+        }
+
+        @keyframes floatBox {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
         }
 
         #login-title {
-            color: black;
-            text-align: center;
-            font-size: x-large;
+            font-size: 28px;
+            text-shadow: 0 0 10px gold;
+            margin-bottom: 15px;
         }
+
+        
+        input {
+            margin: 8px 0;
+            width: 90%;
+            font-size: 20px;
+            border-radius: 25px;
+            padding: 12px 10px;
+            text-align: center;
+            border: 2px solid yellow;
+            background: black;
+            color: yellow;
+            box-shadow: 0 0 12px rgba(255,255,0,0.4);
+        }
+
+        input:focus {
+            border-color: gold;
+            box-shadow: 0 0 18px gold;
+            transform: scale(1.05);
+        }
+
+        #submitButton {
+            width: 95%;
+            font-size: 22px;
+            padding: 12px;
+            border-radius: 25px;
+            margin-top: 12px;
+            background: yellow;
+            color: black;
+            box-shadow: 0 0 15px yellow;
+            transition: 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background: gold;
+            transform: scale(1.08);
+            box-shadow: 0 0 25px gold, 0 0 40px yellow;
+        }
+
+    
+        a {
+            margin-top: 12px;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-shadow: 0 0 12px gold;
+        }
+
     </style>
-    <body>
-        <title>Home</title>
-        <h1 id= "header" style="text-align: center;">Welcome to Mockbuster!</h1>
-        <div id="inputsection">
-            <form method ="POST" action="login-action">
-                <h2 id="login-title">Login</h2>
-                <input id="usernameinput" type="text" placeholder="Username" name="username">
-                <br>
-                <input id="passwordinput" type="password" placeholder="Password" name="password">
-                <br><br>
-                <button id="submitButton" type="submit">Login</button>
-            </form>
-  
-            <a href="/register">Register</a>
-     
-        </div>
-    </body>
+
+</head>
+
+<body>
+
+    <div class="grid-bg"></div>
+    <div class="glow a"></div>
+    <div class="glow b"></div>
+
+    <h1 id="header" style="text-align: center;">Welcome to Mockbuster!</h1>
+
+    <div id="inputsection">
+        <form method="POST" action="login-action">
+            <h2 id="login-title">Login</h2>
+
+            <input id="usernameinput" type="text" placeholder="Username" name="username" required>
+            <br>
+            <input id="passwordinput" type="password" placeholder="Password" name="password" required>
+            <br>
+            <button id="submitButton" type="submit">Login</button>
+        </form>
+
+        <a href="/register">Register</a>
+    </div>
+
+</body>
 </html>
