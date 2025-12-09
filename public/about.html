@@ -1,117 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>About - Mockbuster</title>
 
   <style>
-    html {
+    html, body {
       height: 100%;
-    }
-
-    body {
-      height: 100%;
-      background-color: black;
-      padding: 0;
       margin: 0;
+      padding: 0;
       font-family: "Courier New", monospace;
+      background-color: black;
       color: yellow;
     }
 
-  
+    /* Header */
     #headsection {
       height: 80px;
       background-color: black;
       border-bottom: 2px solid yellow;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
-      text-align: center;
+      box-shadow: 0 0 15px yellow;
     }
 
     #header {
-      color: yellow;
-      font-size: 36px;
-      line-height: 80px;
+      font-size: 42px;
       margin: 0;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px yellow;
+      animation: glowPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 10px yellow; }
+      50% { text-shadow: 0 0 25px yellow; }
     }
 
     #logoutButton {
       position: absolute;
-      right: 15px;
-      top: 25px;
-      background-color: yellow;
+      right: 20px;
+      top: 24px;
+      padding: 8px 16px;
+      background: yellow;
       color: black;
       border: none;
-      padding: 6px 14px;
       font-weight: bold;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    #navbar {
-      width: 15%;
+    #logoutButton:hover {
+      background-color: gold;
+      box-shadow: 0 0 10px gold;
+    }
+
+    /* Layout */
+    #main {
+      display: flex;
       height: calc(100vh - 80px);
+    }
+
+    /* Sidebar */
+    #navbar {
+      width: 240px;
       background-color: black;
       border-right: 2px solid yellow;
-      float: left;
+      padding-top: 25px;
       text-align: center;
-      padding-top: 20px;
+      box-shadow: 4px 0 14px rgba(255, 255, 0, 0.4);
     }
 
     #navhead {
-      font-size: 28px;
-      margin-bottom: 20px;
+      font-size: 26px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px yellow;
     }
 
     .link {
-      font-size: 22px;
+      font-size: 20px;
       display: block;
       color: black;
       background-color: yellow;
       text-decoration: none;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 6px;
+      padding: 12px;
+      margin: 12px;
+      border-radius: 8px;
       font-weight: bold;
+      transition: 0.25s ease;
     }
 
     .link:hover {
       background-color: gold;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px gold;
     }
 
-  
+    /* Content */
     #content {
-    width: 85%;
-    float: left;
-    padding: 40px;
-    box-sizing: border-box;
+      flex: 1;
+      padding: 45px 55px;
     }
-
 
     #content h1 {
       font-size: 48px;
       border-bottom: 3px solid yellow;
-      padding-bottom: 10px;
-      margin-bottom: 25px;
+      padding-bottom: 12px;
+      margin-top: 0;
+      text-shadow: 0 0 12px yellow;
+    }
+
+    /* Highlight text */
+    .highlight {
+      color: gold;
+      font-weight: bold;
+      text-shadow: 0 0 8px gold;
     }
 
     #content p {
       font-size: 18px;
-      line-height: 1.8;
-      max-width: 800px;
+      line-height: 1.9;
+      max-width: 850px;
     }
 
-   
+    /* Team Section */
     #team {
-      margin-top: 40px;
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    #team h2 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 14px yellow;
+    }
+
+    .team-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
     }
 
     .team-card {
-      display: inline-block;
-      background-color: yellow;
+      background: black;
+      border: 2px solid yellow;
+      width: 220px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+      color: yellow;
+      transition: 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Shiny light sweep effect */
+    .team-card::before {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        transparent,
+        rgba(255, 255, 0, 0.25),
+        transparent
+      );
+      transform: rotate(20deg);
+      transition: 0.5s;
+    }
+
+    .team-card:hover::before {
+      top: 100%;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 0 28px gold;
+      border-color: gold;
+    }
+
+    .team-card h3 {
+      font-size: 22px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .role {
+      font-size: 14px;
+      letter-spacing: 1px;
       color: black;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 8px;
+      background: yellow;
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      box-shadow: 0 0 6px yellow;
       font-weight: bold;
-      box-shadow: 0 0 10px yellow;
     }
 
   </style>
@@ -119,7 +210,7 @@
 
 <body>
 
-
+  <!-- Header -->
   <div id="headsection">
     <form action="logout">
       <input id="logoutButton" type="submit" value="Logout">
@@ -127,34 +218,68 @@
     <h1 id="header">Mockbuster</h1>
   </div>
 
-  
-  <div id="navbar">
-    <header id="navhead">Navigation</header>
-    <a class="link" href="/home">Home</a>
-    <a class="link" href="#">Portfolio</a>
-    <a class="link" href="#">Contact</a>
-  </div>
+  <!-- Main Layout -->
+  <div id="main">
 
-  <div id="content">
-    <h1>About Us</h1>
-
-    <p>
-      Mockbuster is a movie browsing and rental-style web application created as part of our CSC 337 course project.
-      Our goal is to allow users to explore movies by genre in a fun and simple way inspired by classic video rental stores.
-    </p>
-
-    <p>
-      Users can browse action and horror movies, manage their lists, and experience a clean, retro-style movie interface.
-    </p>
-
-    <div id="team">
-      <h2>Our Team</h2>
-
-      <div class="team-card">Sachi</div>
-      <div class="team-card">Monica</div>
-      <div class="team-card">James</div>
-      <div class="team-card">Adam</div>
+    <!-- Navigation -->
+    <div id="navbar">
+      <header id="navhead">Navigation</header>
+      <a class="link" href="/home">Home</a>
+      <a class="link" href="#">Portfolio</a>
+      <a class="link" href="#">Contact</a>
     </div>
+
+    <!-- Page Content -->
+    <div id="content">
+      <h1>About Us</h1>
+
+      <p>
+        <span class="highlight">Mockbuster</span> is a retro-inspired movie browsing and rental-style web application,
+        created as part of our <span class="highlight">CSC 337</span> course project. The goal of Mockbuster is to 
+        recreate the nostalgic experience of exploring classic video rental stores — but reimagined for the modern web.
+      </p>
+
+      <p>
+        Users can browse curated collections of <span class="highlight">Action</span> and 
+        <span class="highlight">Horror</span> movies, save their favorites, manage lists, and interact with a vibrant,
+        neon-styled interface that blends old-school charm with sleek digital design.
+      </p>
+
+      <p>
+        Every design choice — from the color scheme to the animated UI — helps bring back the 
+        retro energy of movie rental culture while delivering a smooth, intuitive user experience.
+      </p>
+
+      <!-- Team Section -->
+      <div id="team">
+        <h2>Our Team</h2>
+
+        <div class="team-container">
+
+          <div class="team-card">
+            <h3>Sachi Chinchay</h3>
+            <p class="role">Frontend Developer</p>
+          </div>
+
+          <div class="team-card">
+            <h3>Monica Lopez</h3>
+            <p class="role">Databases Collection</p>
+          </div>
+
+          <div class="team-card">
+            <h3>James Montoya</h3>
+            <p class="role">UI/UX Designer</p>
+          </div>
+
+          <div class="team-card">
+            <h3>Adam Shehe</h3>
+            <p class="role">Backend Developer</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </body>
