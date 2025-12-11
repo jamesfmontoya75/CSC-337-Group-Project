@@ -956,3 +956,17 @@ app.get("/admin-user/:id", requireLogin, async (req, res) => {
 app.listen(8080, () => {
   console.log("Server Running on http://localhost:8080");
 });
+
+function requireAdmin(req, res, next) {
+  if (!req.session.user) return res.redirect("/login");
+  if (req.session.user.role !== "admin") return res.status(403).send("Admins only.");
+  next();
+}
+
+const newUser = { username, password: hashedPassword, rentedMovies: [], role: "user" };
+
+req.session.user = {
+  username: user.username,
+  rentedMovies: user.rentedMovies || [],
+  role: user.role || "user",
+};
