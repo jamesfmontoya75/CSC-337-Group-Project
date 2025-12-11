@@ -68,7 +68,8 @@ app.post("/register-action", async (req, res) => {
     const newUser = {
       username,
       password: hashedPassword,   // store *hashed* password
-      rentedMovies: []
+      rentedMovies: [],
+      role: "user"
     };
 
     // Insert into DB
@@ -117,12 +118,22 @@ app.post("/login-action", async (req, res) => {
     }
 
     // Store safe user data in session
-    req.session.user = {
-      username: user.username,
-      rentedMovies: user.rentedMovies || []
-    };
+    if (user.role && user.role === 'admin') {
+      req.session.user = {
+        username: user.username
+      };
+      res.redirect("/admin");
+    } else {
+      req.session.user = {
+        username: user.username,
+        rentedMovies: user.rentedMovies || []
+      };
+      res.redirect("/home");
+    }
 
-    res.redirect("/home");
+    
+
+    
 
   } catch (err) {
     console.error("Login Error:", err);
@@ -785,6 +796,7 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+/*
 const newUser = { username, password: hashedPassword, rentedMovies: [], role: "user" };
 
 req.session.user = {
@@ -792,3 +804,4 @@ req.session.user = {
   rentedMovies: user.rentedMovies || [],
   role: user.role || "user",
 };
+*/
