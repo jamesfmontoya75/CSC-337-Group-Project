@@ -7,6 +7,7 @@ const DB_NAME = "mockbuster_db";
 let db = null;
 
 const ADMIN = {
+  username: "admin",
   email: "admin@mockbuster.com",
   password: "admin123",
   name: "Admin User",
@@ -15,21 +16,21 @@ const ADMIN = {
 
 // Seed admin user (defined outside connectDB)
 async function seedAdminUser(db) {
-  const usersCollection = db.collection("users");
+  const users = db.collection("users");
 
+  const hashed = await bcrypt.hash(ADMIN.password, 10);
 
-  const existingAdmin = await usersCollection.findOne({ email: ADMIN.email });
+  // find by username since login uses username
+  const existing = await users.findOne({ username: ADMIN.username });
 
-  if (!existingAdmin) {
-    await usersCollection.insertOne(ADMIN);
-    console.log("Admin user seeded:", ADMIN.email);
+  if (!existing) {
+    await users.insertOne({ ...ADMIN, password: hashed });
   } else {
-    // Ensure they remain admin (in case role was changed)
-    await usersCollection.updateOne(
-      { email: ADMIN.email },
-      { $set: { role: "admin" } }
+    // keep them admin + keep password compatible with bcrypt login
+    await users.updateOne(
+      { username: ADMIN.username },
+      { $set: { role: "admin", password: hashed, email: ADMIN.email, name: ADMIN.name } }
     );
-    console.log("Admin user already exists:", ADMIN.email);
   }
 }
 
