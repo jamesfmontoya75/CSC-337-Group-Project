@@ -17,8 +17,6 @@ const ADMIN = {
 async function seedAdminUser(db) {
   const usersCollection = db.collection("users");
 
-  // optional but recommended: unique email
-  await usersCollection.createIndex({ email: 1 }, { unique: true });
 
   const existingAdmin = await usersCollection.findOne({ email: ADMIN.email });
 
