@@ -121,9 +121,8 @@
         
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
-            <a class = "link" href="/about">About</a>
-            <a class = "link" href="/my-movies">My Movies</a>
-            <a class="link" href="/contact">Contact</a>
+            <a class = "link" href="/admin-users">Users</a>
+            <a class = "link" href="/admin">Movies</a>
         </div>
         <div id="content">
 
@@ -203,7 +202,7 @@
         for(var i = 0; i<array.length; i++){
             var coverForm = document.createElement("form")
             coverForm.setAttribute("class", "cover_form")
-            coverForm.setAttribute("action", "/rent-movie")
+            coverForm.setAttribute("action", "/admin-remove-movie")
             coverForm.setAttribute("method", "post")
 
             // Hidden input to send the movie id

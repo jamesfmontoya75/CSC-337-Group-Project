@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+    <html>
     <link rel="stylesheet" href="/styles/general.css"/>
     <style>
         html{
@@ -15,7 +15,7 @@
         }
 
         #headsection {
-            height: 55px;              
+            height: 55px;                /* fixed height for consistency */
             width: 100%;
             font-size: 22px;
             text-align: center;
@@ -109,41 +109,40 @@
             width: 30%;
         }
 
-        
+        #submitButton {
+            
+        }
 
     </style>
     <body>
-        <title>Home</title>
         <div id="headsection">
-           <form action="/logout" method="get">
+            <form action="/logout" method="get">
                 <button id="logoutButton" type="submit">Logout</button>
             </form>
-            <h1 id= "header">Mockbuster</h1>
+            <h1 id="header">Mockbuster</h1>
         </div>
-        
+
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
-            <a class="link" href="/">Home</a>
-            <a class = "link" href="/about">About</a>
-            <a class = "link" href="/my-movies">My Movies</a>
-            <a class="link" href="/contact">Contact</a>
+            <a class = "link" href="/admin-users">Users</a>
+            <a class = "link" href="/admin-movies">Movies</a>
         </div>
+
         <div id="content">
             <div id="movie-container">
-                <img class="cover" src="/images/black-panther.jpg"/>
+                <img class="cover" src="${movie.cover}" />
                 <div id="movie-info">
-                    <h2>Title: Black Panther</h2>
-                    <h4>Director: Ryan Coogler</h4>
-                    <h4>Released: 2018</h4>
-                    <h4>Genre: Action</h4>
-                    <form>
-                       <button id="submitButton" type="submit">Add Movie</button>
+                    <h2>Title: ${movie.title}</h2>
+                    <h4>Director: ${movie.director}</h4>
+                    <h4>Released: ${movie.year}</h4>
+                    <h4>Genre: ${movie.genre}</h4>
+
+                    <form action="/admin-remove-movie" method="post">
+                       <input type="hidden" name="movieId" value="${movie.id}">
+                       <button type="submit">Remove Movie</button>
                     </form>
                 </div>
             </div>
- 
-            
         </div>
-        
     </body>
-</html>
+    </html>
