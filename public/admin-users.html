@@ -181,8 +181,8 @@
         for(var i = 0; i<array.length; i++){
             var userForm = document.createElement("form")
             userForm.setAttribute("class", "user_form")
-            userForm.setAttribute("action", "/admin-remove-user")
-            userForm.setAttribute("method", "post")
+            userForm.setAttribute("action", "/admin-user/" + array[i]._id)
+            userForm.setAttribute("method", "get")
 
             // Hidden input to send the movie id
             var hiddenInput = document.createElement("input")

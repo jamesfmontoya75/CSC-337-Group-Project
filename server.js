@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const {ObjectId} = require("mongodb")
 
 
 const { connectDB, getDB } = require("./db");
@@ -782,7 +783,7 @@ app.post("/admin-remove-movie", requireLogin, async (req, res) => {
     const user = req.session.user;
     const movieId = req.body.movieId;
 
-    console.log("Admin Removing:", user.username, "Movie:", movieId);
+    // console.log("Admin Removing:", user.username, "Movie:", movieId);
 
     res.redirect("/admin-movie/"+movieId);
   } catch (err) {
@@ -793,28 +794,32 @@ app.post("/admin-remove-movie", requireLogin, async (req, res) => {
 
 app.post("/admin-remove-user", requireLogin, async (req,res)=>{
   try {
-    const user = req.session.user;
-    const movieId = req.body.movieId;
+    console.log(req.body)
+    const userId = req.body.userId
 
-    console.log("Admin Removing:", user.username, "User:", user.username);
+    await db.collection("users").deleteOne({
+      _id : new ObjectId(userId)
+    })
 
-    res.redirect("/admin-user/"+user.username);
+    console.log("Admin Removing:", "ID:", userId);
+
+    res.redirect("/admin-users");
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Server error");
   }
 })
 
+
+
 app.get("/admin-user/:id", requireLogin, async (req, res) => {
   const userId = req.params.id;
-
   const users = await db.collection("users").find().toArray()
-  
 
-  console.log(users)
-  console.log(userId)
+  // console.log(users)
+  // console.log(userId)
 
-  const user = users.find((u) => u.username == userId);
+  const user = users.find((u) => u._id == userId);
 
   if (!user) return res.status(404).send("User not found");
   res.send(`<!DOCTYPE html>
@@ -943,7 +948,7 @@ app.get("/admin-user/:id", requireLogin, async (req, res) => {
 
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
-             <a class = "link" href="/admin-users">Users</a>
+             <a class = "link" href="/admin-remove-user">Users</a>
             <a class = "link" href="/admin">Movies</a>
         </div>
 
@@ -952,8 +957,8 @@ app.get("/admin-user/:id", requireLogin, async (req, res) => {
                 <div id="movie-info">
                     <h2>User: ${user.username}</h2>
 
-                    <form action="/admin-users" method="get">
-                       <input type="hidden" name="movieId" value="${user._id}">
+                    <form action="/admin-remove-user" method="post">
+                       <input type="hidden" name="userId" value="${user._id}">
                        <button type="submit">Remove User</button>
                     </form>
                 </div>
