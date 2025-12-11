@@ -755,6 +755,17 @@ app.get("/admin", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "public/admin-movies.html"));
 });
 
+app.get("/users", async (req, res)=>{
+  const users = await db.collection("users").find().toArray()
+  // console.log(users)
+  res.type("application/json");
+  res.send(users);
+})
+
+app.get("/admin-users", (req, res)=>{
+  res.sendFile(path.join(__dirname, "public/admin-users.html"));
+})
+
 app.post("/admin-remove-movie", requireLogin, async (req, res) => {
   try {
     const user = req.session.user;
@@ -762,18 +773,185 @@ app.post("/admin-remove-movie", requireLogin, async (req, res) => {
 
     console.log("Admin Removing:", user.username, "Movie:", movieId);
 
-
-    
-
-    
-    
-
     res.redirect("/admin-movie/"+movieId);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Server error");
   }
 });
+
+app.post("/admin-remove-user", requireLogin, async (req,res)=>{
+  try {
+    const user = req.session.user;
+    const movieId = req.body.movieId;
+
+    console.log("Admin Removing:", user.username, "User:", user.username);
+
+    res.redirect("/admin-user/"+user.username);
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("Server error");
+  }
+})
+
+app.get("/admin-user/:id", requireLogin, async (req, res) => {
+  const userId = req.params.id;
+
+  const users = await db.collection("users").find().toArray()
+  
+
+  console.log(users)
+  console.log(userId)
+
+  const user = users.find((u) => u.username == userId);
+
+  if (!user) return res.status(404).send("User not found");
+  res.send(`<!DOCTYPE html>
+    <html>
+    <link rel="stylesheet" href="/styles/general.css"/>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            height: 102%;
+            padding: 0px;
+            margin: 0px;
+            position: relative;
+            top: -30px;
+            
+        }
+
+        #headsection {
+            height: 55px;                /* fixed height for consistency */
+            width: 100%;
+            font-size: 22px;
+            text-align: center;
+            background: black;
+            color: yellow;
+            border-bottom: 2px solid yellow;
+            display: flex;
+            align-items: center;         /* vertical centering */
+            justify-content: center;     /* horizontal centering */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding: 5px;
+        }
+
+
+
+
+        #logoutButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+
+        #content{
+            text-align: center;
+            margin: 125px 0px 0px 225px;
+        }
+
+        #navbar {
+            position: fixed;
+            top: 55px;                   /* matches header height */
+            left: 0;
+            width: 200px;                /* clean, consistent width */
+            height: calc(100vh - 55px); /* fill page below header */
+
+            background: black;
+            border-right: 1px solid yellow;
+
+            display: flex;
+            flex-direction: column;
+            gap: 15px;                   /* spacing between links */
+            
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+
+        #navbar .link {
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 0;
+            background-color: yellow;
+            padding: 2.5px;
+            font-weight: 600;
+        }
+
+        #navbar .link:hover {
+            opacity: 0.6;
+        }
+
+        form {
+            background-color: black;
+        }
+
+        .link{
+            font-size: x-large;
+            display: block;
+        }
+        #navhead{
+            font-size: x-large;
+            font-weight: 600;
+        }
+
+        #movie-container {
+            display: inline-flex;
+            flex-direction: row;
+            text-align: left;
+            width: fit-content; /* shrink to content size */
+            margin: 0 auto;  /* center horizontally */
+            background-color: yellow;
+            color: black;
+            gap: 20px;
+        }
+
+        .cover{
+            width: 30%;
+        }
+
+        #submitButton {
+            
+        }
+
+    </style>
+    <body>
+        <div id="headsection">
+            <form action="/logout" method="get">
+                <button id="logoutButton" type="submit">Logout</button>
+            </form>
+            <h1 id="header">Mockbuster</h1>
+        </div>
+
+        <div id="navbar">
+            <h2 id="navhead">Navigation</h2>
+             <a class = "link" href="/admin-users">Users</a>
+            <a class = "link" href="/admin">Movies</a>
+        </div>
+
+        <div id="content">
+            <div id="movie-container">
+                <div id="movie-info">
+                    <h2>User: ${user.username}</h2>
+
+                    <form action="/admin-users" method="get">
+                       <input type="hidden" name="movieId" value="${user._id}">
+                       <button type="submit">Remove User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>`)
+  
+})
 
 app.listen(8080, () => {
   console.log("Server Running on http://localhost:8080");
