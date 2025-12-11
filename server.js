@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 
-// --- MongoDB helper ---
+
 const { connectDB, getDB } = require("./db");
 
 const app = express();
@@ -32,9 +32,7 @@ function requireLogin(req, res, next) {
   next();
 }
 
-// =======================
-// CONNECT TO MONGO FIRST
-// =======================
+
 let db;
 
 connectDB().then(() => {
@@ -42,9 +40,7 @@ connectDB().then(() => {
   console.log("MongoDB connected.");
 });
 
-// =======================
-// AUTH ROUTES
-// =======================
+
 
 // Register page
 app.get("/register", (req, res) => {
@@ -101,7 +97,7 @@ app.post("/login-action", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Step 1: Find the user by username
+    //Find the user by username
     const user = await db.collection("users").findOne({ username });
 
     if (!user) {
@@ -111,7 +107,7 @@ app.post("/login-action", async (req, res) => {
       `);
     }
 
-    // Step 2: Compare plaintext password with hashed stored password
+    //Compare plaintext password with hashed stored password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.send(`
@@ -120,7 +116,7 @@ app.post("/login-action", async (req, res) => {
       `);
     }
 
-    // Step 3: Store safe user data in session
+    // Store safe user data in session
     req.session.user = {
       username: user.username,
       rentedMovies: user.rentedMovies || []
@@ -150,9 +146,7 @@ app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));
 });
 
-// =======================
-// MOVIES COLLECTION API
-// =======================
+
 
 // serve movies.json for the frontend
 app.get("/movies", requireLogin, (req, res) => {
@@ -333,9 +327,7 @@ app.get("/movie/:id", requireLogin, (req, res) => {
   `);
 });
 
-// =======================
-// RENT MOVIE (DB UPDATE)
-// =======================
+
 app.post("/rent-movie", requireLogin, async (req, res) => {
   try {
     const user = req.session.user;
@@ -591,9 +583,7 @@ app.get("/contact", requireLogin,(req, res) => {
   res.sendFile(path.join(__dirname, "public/contact.html"));
 });
 
-// =======================
-// START SERVER
-// =======================
+
 app.listen(8080, () => {
   console.log("Server Running on http://localhost:8080");
 });
