@@ -163,7 +163,6 @@ app.get("/logout", (req, res) => {
 // serve movies.json for the frontend
 app.get("/movies", requireLogin, async (req, res) => {
   const movies = await db.collection("movies").find().toArray();
-  // console.log(movies);
   res.type("application/json");
   res.send(movies);
 });
@@ -382,7 +381,6 @@ app.get("/my-movies", requireLogin,async (req, res)=>{
       <a href="/login">Login</a>
     `);
   }
-  // console.log(user)
   res.sendFile(path.join(__dirname, "public/my-movies.html"));
   
 })
@@ -763,7 +761,6 @@ app.get("/admin", requireLogin, (req, res) => {
 
 app.get("/users", async (req, res)=>{
   const users = await db.collection("users").find().toArray()
-  // console.log(users)
   res.type("application/json");
   res.send(users);
 })
@@ -774,7 +771,6 @@ app.get("/admin-users", (req, res)=>{
 
 app.post("/admin-remove-movie", requireLogin, async (req, res) => {
    try {
-    console.log(req.body)
     const movieId = req.body.movieId
 
     await db.collection("movies").deleteOne({
@@ -813,9 +809,6 @@ app.post("/admin-remove-user", requireLogin, async (req,res)=>{
 app.get("/admin-user/:id", requireLogin, async (req, res) => {
   const userId = req.params.id;
   const users = await db.collection("users").find().toArray()
-
-  // console.log(users)
-  // console.log(userId)
 
   const user = users.find((u) => u._id == userId);
 
@@ -946,7 +939,7 @@ app.get("/admin-user/:id", requireLogin, async (req, res) => {
 
         <div id="navbar">
             <h2 id="navhead">Navigation</h2>
-             <a class = "link" href="/admin-remove-user">Users</a>
+             <a class = "link" href="/admin-users">Users</a>
             <a class = "link" href="/admin">Movies</a>
         </div>
 
@@ -976,13 +969,3 @@ function requireAdmin(req, res, next) {
   if (req.session.user.role !== "admin") return res.status(403).send("Admins only.");
   next();
 }
-
-/*
-const newUser = { username, password: hashedPassword, rentedMovies: [], role: "user" };
-
-req.session.user = {
-  username: user.username,
-  rentedMovies: user.rentedMovies || [],
-  role: user.role || "user",
-};
-*/
