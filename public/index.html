@@ -166,9 +166,23 @@
         
     </body>
     <script>
+
+        function getByGenre(genre, movies) {
+            const genreMovies = [];
+
+            for (let i = 0; i < movies.length; i++) {
+                if (movies[i].genre === genre) {
+                    genreMovies.push(movies[i]);
+                }
+            }
+
+            return genreMovies;
+        }
+
         async function loadMovies() {
         try {
             const response = await fetch("/movies"); // fetch from server
+            console.log(response);
             const data = await response.json();      // parse json
 
             console.log(data);
@@ -177,13 +191,13 @@
             console.log(sections)
 
             var actionGenreSection = sections[0]
-            fillMovies(data.action, actionGenreSection)
+            fillMovies(getByGenre("Action", data), actionGenreSection)
 
             var horrorSection = sections[1]
-            fillMovies(data.horror, horrorSection)
+            fillMovies(getByGenre("Horror", data), horrorSection)
 
             var romanticSection = sections[2]
-            fillMovies(data.romantic, romanticSection)
+            fillMovies(getByGenre("Romantic", data), romanticSection)
 
             
             

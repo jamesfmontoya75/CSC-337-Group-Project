@@ -179,6 +179,11 @@
 
     function fillUsers(array, genreSection){
         for(var i = 0; i<array.length; i++){
+
+            if (array[i].role === "admin") {
+                continue;
+            }
+
             var userForm = document.createElement("form")
             userForm.setAttribute("class", "user_form")
             userForm.setAttribute("action", "/admin-user/" + array[i]._id)

@@ -1,6 +1,7 @@
 // db.js
 const { MongoClient } = require("mongodb");
 const bcrypt = require("bcrypt");
+const fs = require('fs');
 
 const MONGO_URL = "mongodb://127.0.0.1:27017"; // local MongoDB
 const DB_NAME = "mockbuster_db";
@@ -35,6 +36,35 @@ async function seedAdminUser(db) {
   }
 }
 
+// Create movies collection
+async function createMoviesCollection(client) {
+  try {
+    const db = client.db(DB_NAME);
+
+    const rawData = fs.readFileSync("movies.json", "utf-8");
+    const moviesObj = JSON.parse(rawData);
+
+    const allMovies = [
+      ...moviesObj.horror,
+      ...moviesObj.romantic,
+      ...moviesObj.action,
+    ];
+
+    const collections = await db.listCollections().toArray();
+    const exists = collections.some((c) => c.name === "movies");
+
+    if (exists) {
+      await db.collection("movies").drop();
+    }
+
+    const result = await db.collection("movies").insertMany(allMovies);
+
+    console.log(`Inserted ${result.insertedCount} movies.`);
+  } catch (err) {
+    console.error("Movie collection error:", err);
+  }
+}
+
 // Connect to MongoDB ONCE and reuse the connection
 async function connectDB() {
   if (db) return db;
@@ -48,6 +78,8 @@ async function connectDB() {
 
     // IMPORTANT: seed BEFORE returning
     await seedAdminUser(db);
+
+    await createMoviesCollection(client);
 
     return db;
   } catch (err) {

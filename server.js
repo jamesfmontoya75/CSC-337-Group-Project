@@ -161,9 +161,11 @@ app.get("/logout", (req, res) => {
 
 
 // serve movies.json for the frontend
-app.get("/movies", requireLogin, (req, res) => {
+app.get("/movies", requireLogin, async (req, res) => {
+  const movies = await db.collection("movies").find().toArray();
+  // console.log(movies);
   res.type("application/json");
-  res.sendFile(path.join(__dirname, "movies.json"));
+  res.send(movies);
 });
 
 // show movie details page
@@ -595,20 +597,12 @@ app.get("/contact", requireLogin,(req, res) => {
   res.sendFile(path.join(__dirname, "public/contact.html"));
 });
 
-app.get("/admin-movie/:id", requireLogin, (req, res) => {
-  const movieId = req.params.id;
+app.post("/admin-movie/:id", requireLogin, async (req, res) => {
+  const movieId = req.body.movieId;
 
-  const moviesData = JSON.parse(
-    fs.readFileSync(__dirname + "/movies.json", "utf-8")
-  );
-
-  const allMovies = [
-    ...moviesData.horror,
-    ...moviesData.romantic,
-    ...moviesData.action,
-  ];
-
-  const movie = allMovies.find((m) => m.id == movieId);
+  allMovies = await db.collection("movies").find().toArray();
+  
+  const movie = allMovies.find((m) => m._id == movieId);
 
   if (!movie) return res.status(404).send("Movie not found");
 
@@ -753,7 +747,7 @@ app.get("/admin-movie/:id", requireLogin, (req, res) => {
                     <h4>Genre: ${movie.genre}</h4>
 
                     <form action="/admin-remove-movie" method="post">
-                       <input type="hidden" name="movieId" value="${movie.id}">
+                       <input type="hidden" name="movieId" value="${movie._id}">
                        <button type="submit">Remove Movie</button>
                     </form>
                 </div>
@@ -779,13 +773,17 @@ app.get("/admin-users", (req, res)=>{
 })
 
 app.post("/admin-remove-movie", requireLogin, async (req, res) => {
-  try {
-    const user = req.session.user;
-    const movieId = req.body.movieId;
+   try {
+    console.log(req.body)
+    const movieId = req.body.movieId
 
-    // console.log("Admin Removing:", user.username, "Movie:", movieId);
+    await db.collection("movies").deleteOne({
+      _id : new ObjectId(movieId)
+    })
 
-    res.redirect("/admin-movie/"+movieId);
+    console.log("Admin Removing:", "ID:", movieId);
+
+    res.redirect("/admin");
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Server error");
